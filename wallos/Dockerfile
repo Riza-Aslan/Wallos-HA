@@ -131,6 +131,14 @@ RUN tr -d '\r' < /etc/cron.d/cronjobs > /etc/cron.d/cronjobs.tmp && \
 # Copy run script
 COPY --chmod=755 run.sh /run.sh
 
+# Create /init script (HA Supervisor expects this)
+RUN rm -f /init
+RUN cat > /init << 'INITEOF'
+#!/bin/sh
+exec "$@"
+INITEOF
+RUN chmod 755 /init
+
 # Expose port 80 for Nginx
 EXPOSE 80
 
