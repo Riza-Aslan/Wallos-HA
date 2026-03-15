@@ -133,11 +133,9 @@ RUN tr -d '\r' < /etc/cron.d/cronjobs > /etc/cron.d/cronjobs.tmp && \
 COPY run.sh /run.sh
 RUN chmod +x /run.sh
 
-# Create /init for tini
-RUN if [ -f /sbin/tini ]; then ln -sf /sbin/tini /init; \
-    elif [ -f /usr/bin/tini ]; then ln -sf /usr/bin/tini /init; \
-    else echo '#!/bin/sh' > /init && echo 'exec "$@"' >> /init && chmod +x /init; \
-    fi
+# Create /init script that tini expects
+COPY init.sh /init
+RUN chmod 755 /init
 
 # Expose port 80 for Nginx
 EXPOSE 80
