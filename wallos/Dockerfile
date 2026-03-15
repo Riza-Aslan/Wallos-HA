@@ -6,9 +6,15 @@ FROM alpine:3.19 AS builder
 
 RUN apk add --no-cache git jq curl && \
     WALLOS_VERSION=$(curl -s https://api.github.com/repos/ellite/Wallos/releases/latest | jq -r '.tag_name') && \
-    echo "Building with Wallos version: ${WALLOS_VERSION}" && \
-    git clone --depth 1 --branch ${WALLOS_VERSION} https://github.com/ellite/Wallos.git /tmp/wallos && \
-    echo "${WALLOS_VERSION}" > /tmp/wallos/WALLOS_VERSION
+    if [ -z "$WALLOS_VERSION" ] || [ "$WALLOS_VERSION" = "null" ]; then \
+        echo "Failed to get latest version, using main branch"; \
+        git clone --depth 1 https://github.com/ellite/Wallos.git /tmp/wallos; \
+        echo "main" > /tmp/wallos/WALLOS_VERSION; \
+    else \
+        echo "Building with Wallos version: ${WALLOS_VERSION}"; \
+        git clone --depth 1 --branch ${WALLOS_VERSION} https://github.com/ellite/Wallos.git /tmp/wallos && \
+        echo "${WALLOS_VERSION}" > /tmp/wallos/WALLOS_VERSION; \
+    fi
 
 # Use Home Assistant base image for Supervisor API compatibility
 FROM ${BUILD_FROM}
