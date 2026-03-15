@@ -131,8 +131,13 @@ RUN tr -d '\r' < /etc/cron.d/cronjobs > /etc/cron.d/cronjobs.tmp && \
 # Copy run script
 COPY --chmod=755 run.sh /run.sh
 
+# Create s6-overlay service directory
+RUN mkdir -p /etc/s6-overlay/s6-rc.d/wallos && \
+    mkdir -p /etc/s6-overlay/s6-rc.d/user/contents.d && \
+    printf '#!/bin/sh\nexec /run.sh\n' > /etc/s6-overlay/s6-rc.d/wallos/run && \
+    chmod 755 /etc/s6-overlay/s6-rc.d/wallos/run && \
+    printf 'longrun\n' > /etc/s6-overlay/s6-rc.d/wallos/type && \
+    touch /etc/s6-overlay/s6-rc.d/user/contents.d/wallos
+
 # Expose port 80 for Nginx
 EXPOSE 80
-
-# Start the application directly (HA Supervisor manages the process)
-CMD ["/run.sh"]
