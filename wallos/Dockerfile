@@ -132,8 +132,12 @@ RUN tr -d '\r' < /etc/cron.d/cronjobs > /etc/cron.d/cronjobs.tmp && \
 COPY run.sh /run.sh
 RUN chmod +x /run.sh
 
+# Create /init symlink for tini (HA base image expects this)
+RUN ln -sf /usr/bin/tini /init && \
+    chmod +x /usr/bin/tini /init
+
 # Expose port 80 for Nginx
 EXPOSE 80
 
-# Start the application (tini is provided by the HA base image)
+# Start the application
 CMD ["/run.sh"]
