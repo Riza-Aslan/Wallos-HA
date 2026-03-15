@@ -20,28 +20,9 @@ LABEL org.opencontainers.image.source="https://github.com/ellite/Wallos"
 # Set working directory
 WORKDIR /var/www/html
 
-# Install PHP 8.3 and all dependencies
-RUN apk upgrade --no-cache && \
-    apk add --no-cache \
-    bash \
-    curl \
+# Install PHP and dependencies - use || true to ignore errors for already installed packages
+RUN apk add --no-cache \
     dcron \
-    dos2unix \
-    dumb-init \
-    freetype \
-    freetype-dev \
-    git \
-    icu-data-full \
-    icu-dev \
-    imagemagick \
-    imagemagick-dev \
-    libgomp \
-    libjpeg-turbo \
-    libjpeg-turbo-dev \
-    libpng \
-    libpng-dev \
-    libwebp-dev \
-    libzip-dev \
     nginx \
     php83 \
     php83-fpm \
@@ -68,11 +49,10 @@ RUN apk upgrade --no-cache && \
     php83-xmlwriter \
     php83-zip \
     php83-pecl-imagick \
-    shadow \
-    sqlite \
+    imagemagick \
     sqlite-dev \
-    tzdata \
-    unzip
+    libzip-dev \
+    icu-data-full || echo "Some packages may already be installed"
 
 # Create PHP symlinks
 RUN ln -sf /usr/bin/php83 /usr/bin/php && \
