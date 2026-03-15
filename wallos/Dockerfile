@@ -1,3 +1,6 @@
+# Declare build arg before any FROM (required for Docker)
+ARG BUILD_FROM
+
 # Build stage for fetching Wallos
 FROM alpine:3.19 AS builder
 
@@ -8,7 +11,6 @@ RUN apk add --no-cache git jq curl && \
     echo "${WALLOS_VERSION}" > /tmp/wallos/WALLOS_VERSION
 
 # Use Home Assistant base image for Supervisor API compatibility
-ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
 LABEL maintainer="Riza Aslan"
