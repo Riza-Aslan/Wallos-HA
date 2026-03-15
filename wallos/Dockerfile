@@ -130,14 +130,10 @@ RUN tr -d '\r' < /etc/cron.d/cronjobs > /etc/cron.d/cronjobs.tmp && \
     chown -R www-data:www-data /var/www/html
 
 # Copy run script
-COPY run.sh /run.sh
-RUN chmod +x /run.sh
-
-# Create /init script directly (avoid CRLF issues from Windows)
-RUN printf '#!/bin/sh\nexec "$@"\n' > /init && chmod 755 /init
+COPY --chmod=755 run.sh /run.sh
 
 # Expose port 80 for Nginx
 EXPOSE 80
 
-# Start the application
+# Start the application directly (HA Supervisor manages the process)
 CMD ["/run.sh"]
