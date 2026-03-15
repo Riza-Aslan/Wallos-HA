@@ -133,9 +133,8 @@ RUN tr -d '\r' < /etc/cron.d/cronjobs > /etc/cron.d/cronjobs.tmp && \
 COPY run.sh /run.sh
 RUN chmod +x /run.sh
 
-# Create /init script that tini expects
-COPY init.sh /init
-RUN chmod 755 /init
+# Create /init script directly (avoid CRLF issues from Windows)
+RUN printf '#!/bin/sh\nexec "$@"\n' > /init && chmod 755 /init
 
 # Expose port 80 for Nginx
 EXPOSE 80
