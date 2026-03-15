@@ -59,8 +59,8 @@
     "SMTP_USERNAME": "str?",
     "SMTP_PASSWORD": "password?",
     "SMTP_ENCRYPTION": "list(tls|ssl|none)?",
-    "FROM_EMAIL": "email?",
-    "SERVER_URL": "url?"
+    "FROM_EMAIL": "str?",
+    "SERVER_URL": "str?"
   },
   "environment": {
     "TZ": "{TZ}",
