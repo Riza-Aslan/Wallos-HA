@@ -29,7 +29,6 @@ WORKDIR /var/www/html
 # Install PHP and dependencies - use || true to ignore errors for already installed packages
 RUN apk add --no-cache \
     dcron \
-    dumb-init \
     nginx \
     php83 \
     php83-fpm \
@@ -136,7 +135,5 @@ RUN chmod +x /run.sh
 # Expose port 80 for Nginx
 EXPOSE 80
 
-ENTRYPOINT ["dumb-init", "--"]
-
-# Start the application
+# Start the application (tini is provided by the HA base image)
 CMD ["/run.sh"]
