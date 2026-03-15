@@ -1,0 +1,24 @@
+# Home Assistant Add-on
+*.db
+*.log
+*.tmp
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Docker
+.dockerignore
+
+# Secrets
+secrets.yaml
+*.key
+*.pem
