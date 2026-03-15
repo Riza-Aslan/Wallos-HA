@@ -82,5 +82,5 @@
     "config:rw",
     "ssl:ro"
   ],
-  "image": "ghcr.io/{github_user}/wallos-ha-{arch}"
+  "image": "ghcr.io/riza-aslan/wallos-ha-{arch}"
 }

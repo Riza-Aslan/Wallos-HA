@@ -17,8 +17,9 @@ function handleHASSO($db) {
     }
     
     // Check if request comes from HA Ingress
-    $isIngressRequest = !empty($_SERVER['HTTP_X_FORWARDED_FOR']) || 
-                        !empty($_SERVER['HTTP_X_INGRESS_PATH']);
+    // HA Ingress sets X-Ingress-Path header
+    $isIngressRequest = !empty($_SERVER['HTTP_X_INGRESS_PATH']) || 
+                        (!empty($_SERVER['HTTP_X_FORWARDED_FOR']) && !empty($_SERVER['HTTP_X_FORWARDED_HOST']));
     
     if (!$isIngressRequest) {
         return false;
@@ -38,7 +39,8 @@ function handleHASSO($db) {
         return false;
     }
     
-    // Call HA API to get current user
+    // Call HA Supervisor API to get current user info
+    // The Supervisor API is available at http://supervisor/
     $ch = curl_init('http://supervisor/core/api/current_user');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
@@ -46,17 +48,21 @@ function handleHASSO($db) {
         'Content-Type: application/json'
     ]);
     curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2);
     
     $response = curl_exec($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $curlError = curl_error($ch);
     curl_close($ch);
     
     if ($httpCode !== 200 || !$response) {
+        error_log("SSO: Failed to get HA user info. HTTP Code: $httpCode, Error: $curlError");
         return false;
     }
     
     $haUser = json_decode($response, true);
     if (!$haUser || !isset($haUser['name'])) {
+        error_log("SSO: Invalid response from HA API: " . substr($response, 0, 200));
         return false;
     }
     

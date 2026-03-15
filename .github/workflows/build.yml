@@ -33,14 +33,19 @@ jobs:
       matrix:
         include:
           - arch: aarch64
+            base_image: ghcr.io/home-assistant/aarch64-base:3.19
             platform: linux/arm64
           - arch: amd64
+            base_image: ghcr.io/home-assistant/amd64-base:3.19
             platform: linux/amd64
           - arch: armhf
+            base_image: ghcr.io/home-assistant/armhf-base:3.19
             platform: linux/arm/v6
           - arch: armv7
+            base_image: ghcr.io/home-assistant/armv7-base:3.19
             platform: linux/arm/v7
           - arch: i386
+            base_image: ghcr.io/home-assistant/i386-base:3.19
             platform: linux/386
 
     steps:
@@ -80,6 +85,8 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            BUILD_FROM=${{ matrix.base_image }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 

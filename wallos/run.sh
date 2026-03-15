@@ -48,22 +48,22 @@ chmod -R 755 /var/www/html/images/uploads/logos
 # Create database if it doesn't exist
 if [ ! -f /var/www/html/db/wallos.db ]; then
     echo "Database does not exist. Creating it..."
-    /usr/local/bin/php /var/www/html/endpoints/cronjobs/createdatabase.php
+    php /var/www/html/endpoints/cronjobs/createdatabase.php
 fi
 
 # Run database migrations
 echo "Running database migrations..."
-/usr/local/bin/php /var/www/html/endpoints/db/migrate.php
+php /var/www/html/endpoints/db/migrate.php
 
 # Apply SSO patch if enabled
 if [ "$ENABLE_SSO" = "true" ]; then
     echo "Applying SSO patch..."
-    /usr/local/bin/php /var/www/html/sso_patch.php || echo "SSO patch failed, continuing..."
+    php /var/www/html/sso_patch.php || echo "SSO patch failed, continuing..."
 fi
 
 # Apply environment-based settings to database
 echo "Applying configuration from environment variables..."
-/usr/local/bin/php << 'PHPEOF'
+php << 'PHPEOF'
 <?php
 $db = new SQLite3('/var/www/html/db/wallos.db');
 
@@ -103,9 +103,9 @@ PHPEOF
 
 # Run initial cronjobs
 echo "Running initial setup..."
-/usr/local/bin/php /var/www/html/endpoints/cronjobs/updatenextpayment.php || true
-/usr/local/bin/php /var/www/html/endpoints/cronjobs/updateexchange.php || true
-/usr/local/bin/php /var/www/html/endpoints/cronjobs/checkforupdates.php || true
+php /var/www/html/endpoints/cronjobs/updatenextpayment.php || true
+php /var/www/html/endpoints/cronjobs/updateexchange.php || true
+php /var/www/html/endpoints/cronjobs/checkforupdates.php || true
 
 # Start cron daemon
 echo "Starting cron daemon..."
@@ -113,7 +113,7 @@ crond -b -l 2
 
 # Start PHP-FPM in background
 echo "Starting PHP-FPM..."
-php-fpm -D
+php-fpm83 -D
 
 # Wait for PHP-FPM to be ready
 sleep 2
