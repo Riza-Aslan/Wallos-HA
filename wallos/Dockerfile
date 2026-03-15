@@ -29,6 +29,7 @@ WORKDIR /var/www/html
 # Install PHP and dependencies - use || true to ignore errors for already installed packages
 RUN apk add --no-cache \
     dcron \
+    dumb-init \
     nginx \
     php83 \
     php83-fpm \
