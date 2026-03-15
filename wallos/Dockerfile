@@ -128,27 +128,11 @@ RUN tr -d '\r' < /etc/cron.d/cronjobs > /etc/cron.d/cronjobs.tmp && \
     mkdir -p /var/www/html/.tmp && \
     chown -R www-data:www-data /var/www/html
 
-# Create s6-overlay service directories
-RUN mkdir -p /etc/s6-overlay/s6-rc.d/nginx && \
-    mkdir -p /etc/s6-overlay/s6-rc.d/php-fpm && \
-    mkdir -p /etc/s6-overlay/s6-rc.d/wallos && \
-    mkdir -p /etc/s6-overlay/s6-rc.d/user/contents.d
-
-# Copy s6 service files with proper permissions
-COPY --chmod=755 s6/nginx/run /etc/s6-overlay/s6-rc.d/nginx/run
-COPY s6/nginx/type /etc/s6-overlay/s6-rc.d/nginx/type
-COPY --chmod=755 s6/php-fpm/run /etc/s6-overlay/s6-rc.d/php-fpm/run
-COPY s6/php-fpm/type /etc/s6-overlay/s6-rc.d/php-fpm/type
-COPY --chmod=755 s6/wallos/run /etc/s6-overlay/s6-rc.d/wallos/run
-COPY s6/wallos/type /etc/s6-overlay/s6-rc.d/wallos/type
-
-# Enable services
-RUN touch /etc/s6-overlay/s6-rc.d/user/contents.d/nginx && \
-    touch /etc/s6-overlay/s6-rc.d/user/contents.d/php-fpm && \
-    touch /etc/s6-overlay/s6-rc.d/user/contents.d/wallos
-
-# Fix line endings (Windows CRLF to Unix LF)
-RUN find /etc/s6-overlay -name "run" -exec sed -i 's/\r$//' {} \;
+# Copy run script with execute permissions
+COPY --chmod=0755 run.sh /run.sh
 
 # Expose port 80 for Nginx
 EXPOSE 80
+
+# Start the application
+CMD ["/run.sh"]
