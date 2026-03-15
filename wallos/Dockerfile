@@ -30,7 +30,6 @@ WORKDIR /var/www/html
 RUN apk add --no-cache \
     dcron \
     nginx \
-    tini \
     php83 \
     php83-fpm \
     php83-ctype \
