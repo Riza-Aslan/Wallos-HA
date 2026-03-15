@@ -95,10 +95,14 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
     
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Update version in config.json
         run: |
@@ -113,3 +117,5 @@ jobs:
           git add wallos/config.json
           git diff --staged --quiet || git commit -m "Update version to $(date +'%Y.%m.%d')"
           git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
