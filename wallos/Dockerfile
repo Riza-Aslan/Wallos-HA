@@ -1,5 +1,15 @@
-ARG BUILD_FROM
-FROM ${BUILD_FROM}
+# Use official PHP 8.3 FPM Alpine image
+FROM php:8.3-fpm-alpine AS builder
+
+# Build stage for fetching Wallos
+RUN apk add --no-cache git jq curl && \
+    WALLOS_VERSION=$(curl -s https://api.github.com/repos/ellite/Wallos/releases/latest | jq -r '.tag_name') && \
+    echo "Building with Wallos version: ${WALLOS_VERSION}" && \
+    git clone --depth 1 --branch ${WALLOS_VERSION} https://github.com/ellite/Wallos.git /tmp/wallos && \
+    echo "${WALLOS_VERSION}" > /tmp/wallos/WALLOS_VERSION
+
+# Final stage
+FROM php:8.3-fpm-alpine
 
 LABEL maintainer="Riza Aslan"
 LABEL description="Wallos - Open-Source Subscription Tracker for Home Assistant"
@@ -45,24 +55,16 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp && \
     docker-php-ext-enable imagick && \
     apk del .build-deps
 
-# Clone Wallos from GitHub (latest stable release)
-# Automatically fetches the latest release tag from GitHub API
-RUN apk add --no-cache jq && \
-    WALLOS_VERSION=$(curl -s https://api.github.com/repos/ellite/Wallos/releases/latest | jq -r '.tag_name') && \
-    echo "Building with Wallos version: ${WALLOS_VERSION}" && \
-    git clone --depth 1 --branch ${WALLOS_VERSION} https://github.com/ellite/Wallos.git /tmp/wallos && \
-    cp -r /tmp/wallos/* /var/www/html/ && \
-    rm -rf /tmp/wallos && \
-    # Store version info
-    echo "${WALLOS_VERSION}" > /var/www/html/WALLOS_VERSION && \
-    # Remove unnecessary files
-    rm -f /var/www/html/Dockerfile \
+# Copy Wallos from builder stage
+COPY --from=builder /tmp/wallos/ /var/www/html/
+
+# Remove unnecessary files
+RUN rm -f /var/www/html/Dockerfile \
           /var/www/html/docker-compose.yml \
           /var/www/html/.dockerignore \
           /var/www/html/.gitignore \
           /var/www/html/README.md \
-          /var/www/html/LICENSE && \
-    apk del jq
+          /var/www/html/LICENSE
 
 # Copy Nginx configuration
 COPY nginx.conf /etc/nginx/nginx.conf
