@@ -25,6 +25,8 @@ jobs:
     name: Prepare Version
     runs-on: ubuntu-latest
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
     outputs:
       version: ${{ steps.version.outputs.version }}
     
