@@ -101,6 +101,7 @@ COPY cronjobs /etc/cron.d/cronjobs
 
 # Setup PHP-FPM configuration
 RUN mkdir -p /run/php && \
+    mkdir -p /etc/php83/php-fpm.d && \
     cat > /etc/php83/php-fpm.d/www.conf << 'EOF'
 [www]
 user = www-data
@@ -118,15 +119,21 @@ clear_env = no
 EOF
 
 # PHP configuration
-RUN cat > /etc/php83/conf.d/custom.ini << 'EOF'
+RUN mkdir -p /etc/php83/conf.d && \
+    cat > /etc/php83/conf.d/custom.ini << 'EOF'
 upload_max_filesize = 100M
 post_max_size = 100M
 memory_limit = 256M
 max_execution_time = 300
 EOF
 
+# Create www-data user/group if they don't exist
+RUN (getent group www-data || addgroup -g 82 www-data) && \
+    (getent passwd www-data || adduser -u 82 -D -G www-data www-data)
+
 # Setup cron, permissions
-RUN dos2unix /etc/cron.d/cronjobs && \
+RUN tr -d '\r' < /etc/cron.d/cronjobs > /etc/cron.d/cronjobs.tmp && \
+    mv /etc/cron.d/cronjobs.tmp /etc/cron.d/cronjobs && \
     chmod 0644 /etc/cron.d/cronjobs && \
     /usr/bin/crontab /etc/cron.d/cronjobs && \
     mkdir -p /var/log/cron && \
