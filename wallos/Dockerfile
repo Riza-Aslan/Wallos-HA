@@ -30,6 +30,7 @@ WORKDIR /var/www/html
 RUN apk add --no-cache \
     dcron \
     nginx \
+    tini \
     php83 \
     php83-fpm \
     php83-ctype \
@@ -132,9 +133,11 @@ RUN tr -d '\r' < /etc/cron.d/cronjobs > /etc/cron.d/cronjobs.tmp && \
 COPY run.sh /run.sh
 RUN chmod +x /run.sh
 
-# Create /init symlink for tini (HA base image expects this)
-RUN ln -sf /usr/bin/tini /init && \
-    chmod +x /usr/bin/tini /init
+# Create /init for tini
+RUN if [ -f /sbin/tini ]; then ln -sf /sbin/tini /init; \
+    elif [ -f /usr/bin/tini ]; then ln -sf /usr/bin/tini /init; \
+    else echo '#!/bin/sh' > /init && echo 'exec "$@"' >> /init && chmod +x /init; \
+    fi
 
 # Expose port 80 for Nginx
 EXPOSE 80
