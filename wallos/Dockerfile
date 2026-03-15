@@ -131,6 +131,9 @@ RUN tr -d '\r' < /etc/cron.d/cronjobs > /etc/cron.d/cronjobs.tmp && \
 # Copy run script
 COPY --chmod=755 run.sh /run.sh
 
+# Copy init script with proper permissions
+COPY --chmod=755 init.sh /init
+
 # Expose port 80 for Nginx
 EXPOSE 80
 
