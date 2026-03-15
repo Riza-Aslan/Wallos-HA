@@ -26,7 +26,7 @@ LABEL org.opencontainers.image.source="https://github.com/ellite/Wallos"
 # Set working directory
 WORKDIR /var/www/html
 
-# Install PHP and dependencies - use || true to ignore errors for already installed packages
+# Install PHP and dependencies
 RUN apk add --no-cache \
     dcron \
     nginx \
@@ -130,9 +130,6 @@ RUN tr -d '\r' < /etc/cron.d/cronjobs > /etc/cron.d/cronjobs.tmp && \
 
 # Copy run script
 COPY --chmod=755 run.sh /run.sh
-
-# Copy init script with proper permissions
-COPY --chmod=755 init.sh /init
 
 # Expose port 80 for Nginx
 EXPOSE 80
