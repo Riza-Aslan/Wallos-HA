@@ -1,4 +1,6 @@
-# Ensure shell scripts use LF line endings
+# Ensure all text files use LF line endings
+* text=auto
 *.sh text eol=lf
 *.conf text eol=lf
+*.json text eol=lf
 Dockerfile text eol=lf

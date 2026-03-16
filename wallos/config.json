@@ -1,87 +1,30 @@
 {
   "init": false,
   "name": "Wallos",
-  "version": "2026.03.16",
+  "version": "2026.03.16.5",
   "slug": "wallos",
   "description": "Wallos - Open-Source Subscription Tracker",
   "url": "https://github.com/ellite/Wallos",
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armhf",
-    "armv7",
-    "i386"
-  ],
-  "startup": "system",
+  "arch": ["aarch64", "amd64", "armhf", "armv7", "i386"],
+  "startup": "application",
   "boot": "auto",
   "ports": {
     "80/tcp": 8282
   },
   "ports_description": {
-    "80/tcp": "Wallos Web Interface (nur ohne Ingress)"
+    "80/tcp": "Wallos Web Interface"
   },
   "host_network": false,
   "hassio_api": true,
   "hassio_role": "default",
-  "homeassistant_api": true,
-  "auth_api": true,
   "ingress": true,
   "ingress_port": 80,
   "ingress_entry": "/",
   "ingress_stream": true,
   "panel_icon": "mdi:cash-multiple",
   "panel_title": "Wallos",
-  "options": {
-    "TZ": "Europe/Berlin",
-    "ENABLE_SSO": true,
-    "DEMO_MODE": false,
-    "DISABLE_LOGIN": false,
-    "DISABLE_REGISTRATION": true,
-    "MAX_USERS": 0,
-    "ENABLE_EMAIL_VERIFICATION": false,
-    "SMTP_ADDRESS": "",
-    "SMTP_PORT": 587,
-    "SMTP_USERNAME": "",
-    "SMTP_PASSWORD": "",
-    "SMTP_ENCRYPTION": "tls",
-    "FROM_EMAIL": "",
-    "SERVER_URL": ""
-  },
-  "schema": {
-    "TZ": "str",
-    "ENABLE_SSO": "bool",
-    "DEMO_MODE": "bool",
-    "DISABLE_LOGIN": "bool",
-    "DISABLE_REGISTRATION": "bool",
-    "MAX_USERS": "int(0,)",
-    "ENABLE_EMAIL_VERIFICATION": "bool",
-    "SMTP_ADDRESS": "str?",
-    "SMTP_PORT": "port?",
-    "SMTP_USERNAME": "str?",
-    "SMTP_PASSWORD": "password?",
-    "SMTP_ENCRYPTION": "list(tls|ssl|none)?",
-    "FROM_EMAIL": "str?",
-    "SERVER_URL": "str?"
-  },
-  "environment": {
-    "TZ": "{TZ}",
-    "ENABLE_SSO": "{ENABLE_SSO}",
-    "DEMO_MODE": "{DEMO_MODE}",
-    "DISABLE_LOGIN": "{DISABLE_LOGIN}",
-    "DISABLE_REGISTRATION": "{DISABLE_REGISTRATION}",
-    "MAX_USERS": "{MAX_USERS}",
-    "ENABLE_EMAIL_VERIFICATION": "{ENABLE_EMAIL_VERIFICATION}",
-    "SMTP_ADDRESS": "{SMTP_ADDRESS}",
-    "SMTP_PORT": "{SMTP_PORT}",
-    "SMTP_USERNAME": "{SMTP_USERNAME}",
-    "SMTP_PASSWORD": "{SMTP_PASSWORD}",
-    "SMTP_ENCRYPTION": "{SMTP_ENCRYPTION}",
-    "FROM_EMAIL": "{FROM_EMAIL}",
-    "SERVER_URL": "{SERVER_URL}"
-  },
-  "map": [
-    "config:rw",
-    "ssl:ro"
-  ],
+  "map": ["config:rw", "ssl:ro"],
+  "options": {},
+  "schema": {},
   "image": "ghcr.io/riza-aslan/wallos-ha-{arch}"
 }
