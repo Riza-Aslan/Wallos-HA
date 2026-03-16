@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.4
+
+- Improved SQL fix for redirect loops (compatibility for different DB schemas)
+
 ## 2.2.3
 
 - Debug: Added /data directory logging at startup

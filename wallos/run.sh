@@ -54,10 +54,13 @@ ln -sf /data/wallos.db /var/www/html/db/wallos.db
 chown nginx:nginx /data/wallos.db
 chmod 777 /data/wallos.db
 
-# Deaktiviere HTTPS-Zwang in der Datenbank (Redirect-Loop Fix)
-bashio::log.info "Deaktiviere HTTPS-Zwang in der Datenbank (Redirect-Loop Fix)..."
+# Deaktiviere HTTPS-Zwang (Redirect-Loop Fix)
+bashio::log.info "Deaktiviere HTTPS-Zwang (Redirect-Loop Fix)..."
+# Wir versuchen beide gängigen Spaltennamen, falls einer fehlschlägt
 sqlite3 /data/wallos.db "UPDATE settings SET value = '0' WHERE name = 'https';" || true
+sqlite3 /data/wallos.db "UPDATE settings SET val = '0' WHERE name = 'https';" || true
 sqlite3 /data/wallos.db "UPDATE settings SET value = 'https://hass.as-lan.eu' WHERE name = 'url';" || true
+sqlite3 /data/wallos.db "UPDATE settings SET val = 'https://hass.as-lan.eu' WHERE name = 'url';" || true
 
 # Set permissions for web directory
 chmod -R 755 /var/www/html
