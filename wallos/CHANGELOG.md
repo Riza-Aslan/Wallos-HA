@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.4.0
+
+- Major Refactoring: Removed legacy SQL hacks and simplified directory persistence to allow native UI database imports
+
 ## 2.3.2
 
 - Added auto-migration for existing databases to the new directory structure and fixed initial setup crash
