@@ -29,6 +29,8 @@ RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositor
     php83-tokenizer \
     php83-xmlwriter \
     php83-simplexml \
+    php83-ctype \
+    php83-iconv \
     sqlite \
     curl \
     git \
@@ -40,9 +42,10 @@ RUN ln -sf /usr/bin/php83 /usr/bin/php && \
     ln -sf /usr/sbin/php-fpm83 /usr/sbin/php-fpm
 
 # Download and extract Wallos
-RUN git clone --depth 1 --branch v4.6.2 https://github.com/ellite/Wallos.git /tmp/wallos && \
-    cp -r /tmp/wallos/* /var/www/html/ && \
-    rm -rf /tmp/wallos
+RUN git clone --depth 1 --branch v4.6.2 https://github.com/ellite/Wallos.git /tmp/wallos_download && \
+    mkdir -p /var/www/html && \
+    cp -a /tmp/wallos_download/. /var/www/html/ && \
+    rm -rf /tmp/wallos_download
 
 # Configure PHP-FPM
 RUN sed -i "s|;daemonize = yes|daemonize = no|g" /etc/php83/php-fpm.conf && \
