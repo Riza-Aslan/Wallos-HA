@@ -26,18 +26,26 @@ ln -sf /data/wallos/tmp /var/www/html/.tmp
 chmod -R 777 /data/wallos/logos
 chmod -R 777 /data/wallos/tmp
 
-# Sicherstellen, dass das Datenbank-Verzeichnis im Web-Ordner existiert
+# Verzeichnis sicherstellen
 mkdir -p /var/www/html/db
 
-# Falls die Datenbank noch nicht in /data liegt, dorthin verschieben oder neu erstellen
 if [ ! -f /data/wallos.db ]; then
-    bashio::log.info "Initialisiere persistente Datenbank in /data..."
-    # Falls durch den Build eine leere DB in /var/www/html/db liegt, diese als Basis nehmen
-    [ -f /var/www/html/db/wallos.db ] && mv /var/www/html/db/wallos.db /data/wallos.db
-    touch /data/wallos.db
+    bashio::log.info "Erstelle neue Wallos Datenbank..."
+    # Nutze das Wallos-eigene Skript zur Erstellung
+    cd /var/www/html/endpoints/cronjobs
+    php createdatabase.php
+    cd /var/www/html
+
+    # Die erstellte Datenbank nach /data verschieben
+    if [ -f /var/www/html/db/wallos.db ]; then
+        mv /var/www/html/db/wallos.db /data/wallos.db
+    else
+        # Fallback, falls das Skript woanders speichert
+        touch /data/wallos.db
+    fi
 fi
 
-# Symbolischen Link setzen, damit Wallos die Datenbank in /data findet
+# Symbolischen Link setzen
 ln -sf /data/wallos.db /var/www/html/db/wallos.db
 chown nginx:nginx /data/wallos.db
 chmod 777 /data/wallos.db
