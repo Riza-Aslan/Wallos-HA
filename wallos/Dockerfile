@@ -12,7 +12,9 @@ ENV WALLOS_VERSION="2.38.0"
 # Install minimal dependencies (PHP 8.3 from edge)
 RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
     echo "https://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
+    apk update && apk upgrade && \
     apk add --no-cache \
+    libxml2 \
     nginx \
     php83 \
     php83-fpm \
