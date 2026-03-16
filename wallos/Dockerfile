@@ -58,7 +58,9 @@ RUN chmod a+x /run.sh
 RUN mkdir -p /var/www/html/db && \
     mkdir -p /var/www/html/images/uploads/logos && \
     mkdir -p /var/www/html/.tmp && \
-    chown -R www-data:www-data /var/www/html
+    chmod -R 777 /var/www/html/db && \
+    chmod -R 777 /var/www/html/images/uploads/logos && \
+    chmod -R 777 /var/www/html/.tmp
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
