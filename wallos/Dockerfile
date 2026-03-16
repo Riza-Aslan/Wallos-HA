@@ -7,7 +7,7 @@ LABEL io.hass.name="Wallos"
 LABEL io.hass.description="Open-Source Subscription Tracker"
 
 # Set environment variables
-ENV WALLOS_VERSION="2.38.0"
+ENV WALLOS_VERSION="4.6.2"
 
 # Install minimal dependencies (PHP 8.3 from edge)
 RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
@@ -31,8 +31,10 @@ RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositor
     php83-session \
     php83-tokenizer \
     php83-xmlwriter \
+    php83-simplexml \
     sqlite \
     curl \
+    git \
     jq \
     tzdata
 
@@ -41,9 +43,9 @@ RUN ln -sf /usr/bin/php83 /usr/bin/php && \
     ln -sf /usr/sbin/php-fpm83 /usr/sbin/php-fpm
 
 # Download and extract Wallos
-RUN mkdir -p /var/www/html && \
-    curl -sL "https://github.com/ellite/Wallos/archive/refs/tags/v${WALLOS_VERSION}.tar.gz" | \
-    tar xz -C /var/www/html --strip-components=1
+RUN git clone --depth 1 --branch v${WALLOS_VERSION} https://github.com/ellite/Wallos.git /tmp/wallos && \
+    cp -r /tmp/wallos/* /var/www/html/ && \
+    rm -rf /tmp/wallos
 
 # Configure PHP-FPM
 RUN sed -i "s|;daemonize = yes|daemonize = no|g" /etc/php83/php-fpm.conf && \
