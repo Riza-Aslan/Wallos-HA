@@ -131,6 +131,9 @@ RUN tr -d '\r' < /etc/cron.d/cronjobs > /etc/cron.d/cronjobs.tmp && \
 # Copy run script with execute permissions
 COPY --chmod=0755 run.sh /run.sh
 
+# Fix Windows line endings (CRLF -> LF)
+RUN sed -i 's/\r$//' /run.sh
+
 # Expose port 80 for Nginx
 EXPOSE 80
 
