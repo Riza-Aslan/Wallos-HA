@@ -6,9 +6,6 @@ LABEL io.hass.type="addon"
 LABEL io.hass.name="Wallos"
 LABEL io.hass.description="Open-Source Subscription Tracker"
 
-# Set environment variables
-ENV WALLOS_VERSION="4.6.2"
-
 # Install minimal dependencies (PHP 8.3 from edge)
 RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
     echo "https://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
@@ -43,7 +40,7 @@ RUN ln -sf /usr/bin/php83 /usr/bin/php && \
     ln -sf /usr/sbin/php-fpm83 /usr/sbin/php-fpm
 
 # Download and extract Wallos
-RUN git clone --depth 1 --branch v${WALLOS_VERSION} https://github.com/ellite/Wallos.git /tmp/wallos && \
+RUN git clone --depth 1 --branch v4.6.2 https://github.com/ellite/Wallos.git /tmp/wallos && \
     cp -r /tmp/wallos/* /var/www/html/ && \
     rm -rf /tmp/wallos
 
