@@ -34,35 +34,32 @@ ln -sf /data/wallos/tmp /var/www/html/.tmp
 chmod -R 777 /data/wallos/logos
 chmod -R 777 /data/wallos/tmp
 
-# Datenbank verlinken
-mkdir -p /var/www/html/db
-if [ -f /data/wallos.db ]; then
-    bashio::log.info "Verlinke persistente Datenbank..."
-    rm -f /var/www/html/db/wallos.db
-    ln -sf /data/wallos.db /var/www/html/db/wallos.db
-    chown nginx:nginx /data/wallos.db /var/www/html/db/wallos.db
-    chmod 777 /data/wallos.db
-else
-    bashio::log.info "Keine Datenbank gefunden. Initialisiere neu..."
-    cd /var/www/html/endpoints/cronjobs
-    php createdatabase.php
-    cd /var/www/html
-    mv /var/www/html/db/wallos.db /data/wallos.db
-    rm -f /var/www/html/db/wallos.db
-    ln -sf /data/wallos.db /var/www/html/db/wallos.db
-    chown nginx:nginx /data/wallos.db /var/www/html/db/wallos.db
-    chmod 777 /data/wallos.db
-fi
+bashio::log.info "Isoliere das gesamte Datenbank-Verzeichnis..."
+
+# 1. Dauerhaften Ordner in /data erstellen
+mkdir -p /data/db
+
+# 2. Original-Ordner im Container komplett löschen
+rm -rf /var/www/html/db
+
+# 3. Den gesamten Ordner als Symlink setzen
+ln -sf /data/db /var/www/html/db
+
+# 4. Rechte für den gesamten Ordner setzen
+chown -R nginx:nginx /data/db
+chmod -R 777 /data/db
 
 # SQL-Fix nur ausführen, wenn die Spalte 'val' oder 'value' existiert
-if sqlite3 /data/wallos.db "PRAGMA table_info(settings);" | grep -qE 'val|value'; then
-    bashio::log.info "Führe SQL-Redirect-Fix aus..."
-    sqlite3 /data/wallos.db "UPDATE settings SET val = '0' WHERE name = 'https';" || true
-    sqlite3 /data/wallos.db "UPDATE settings SET value = '0' WHERE name = 'https';" || true
-    sqlite3 /data/wallos.db "UPDATE settings SET val = 'https://hass.as-lan.eu' WHERE name = 'url';" || true
-    sqlite3 /data/wallos.db "UPDATE settings SET value = 'https://hass.as-lan.eu' WHERE name = 'url';" || true
-else
-    bashio::log.warning "Alte Datenbank-Struktur erkannt. Überspringe SQL-Fix, Nginx übernimmt."
+if [ -f /data/db/wallos.db ]; then
+    if sqlite3 /data/db/wallos.db "PRAGMA table_info(settings);" | grep -qE 'val|value'; then
+        bashio::log.info "Führe SQL-Redirect-Fix aus..."
+        sqlite3 /data/db/wallos.db "UPDATE settings SET val = '0' WHERE name = 'https';" || true
+        sqlite3 /data/db/wallos.db "UPDATE settings SET value = '0' WHERE name = 'https';" || true
+        sqlite3 /data/db/wallos.db "UPDATE settings SET val = 'https://hass.as-lan.eu' WHERE name = 'url';" || true
+        sqlite3 /data/db/wallos.db "UPDATE settings SET value = 'https://hass.as-lan.eu' WHERE name = 'url';" || true
+    else
+        bashio::log.warning "Alte Datenbank-Struktur erkannt. Überspringe SQL-Fix, Nginx übernimmt."
+    fi
 fi
 
 # Set permissions for web directory

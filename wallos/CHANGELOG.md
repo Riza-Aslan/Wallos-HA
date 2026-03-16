@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.1
+
+- Refactored database persistence from file-level to directory-level to prevent SQLite WAL-file loss upon container restart
+
 ## 2.3.0
 
 - Critical fix: Corrected bashio logging and prioritized Nginx redirect fix
