@@ -34,6 +34,7 @@ chmod -R 777 /data/wallos/tmp
 mkdir -p /var/www/html/db
 if [ -f /data/wallos.db ]; then
     bashio::log.info "Verlinke persistente Datenbank..."
+    rm -f /var/www/html/db/wallos.db
     ln -sf /data/wallos.db /var/www/html/db/wallos.db
     chown nginx:nginx /data/wallos.db
     chmod 777 /data/wallos.db
@@ -43,6 +44,7 @@ else
     php createdatabase.php
     cd /var/www/html
     mv /var/www/html/db/wallos.db /data/wallos.db
+    rm -f /var/www/html/db/wallos.db
     ln -sf /data/wallos.db /var/www/html/db/wallos.db
     chown nginx:nginx /data/wallos.db
     chmod 777 /data/wallos.db

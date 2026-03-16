@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.9
+
+- Bugfix: Corrected bashio log command and improved symlink reliability for persistent storage
+
 ## 2.2.8
 
 - Fix: Corrected bashio log command and forced HTTPS param in Nginx to break redirect loops
