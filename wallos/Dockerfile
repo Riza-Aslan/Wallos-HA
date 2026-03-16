@@ -128,11 +128,11 @@ RUN tr -d '\r' < /etc/cron.d/cronjobs > /etc/cron.d/cronjobs.tmp && \
     mkdir -p /var/www/html/.tmp && \
     chown -R www-data:www-data /var/www/html
 
-# Copy run script with execute permissions
-COPY --chmod=0755 run.sh /run.sh
+# Copy run script
+COPY run.sh /run.sh
 
-# Fix Windows line endings (CRLF -> LF)
-RUN sed -i 's/\r$//' /run.sh
+# Fix Windows line endings and set permissions
+RUN sed -i 's/\r$//' /run.sh && chmod 777 /run.sh
 
 # Expose port 80 for Nginx
 EXPOSE 80
