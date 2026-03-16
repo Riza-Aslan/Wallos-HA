@@ -20,23 +20,18 @@ fi
 
 bashio::log.info "Bereite Wallos vor..."
 
-# 1. Nginx Proxy-Fix (verhindert den Redirect-Loop hinter Home Assistant)
-sed -i 's/fastcgi_params;/fastcgi_params;\n        fastcgi_param HTTPS on;/' /etc/nginx/http.d/default.conf
+# 1. Nginx Proxy-Fix (Intelligent: nur hinzufügen, wenn noch nicht vorhanden)
+if ! grep -q "fastcgi_param HTTPS on;" /etc/nginx/http.d/default.conf; then
+    sed -i 's/fastcgi_params;/fastcgi_params;\n        fastcgi_param HTTPS on;/' /etc/nginx/http.d/default.conf
+fi
 
-# 2. Persistenz simpel und sicher
+# 2. Persistenz
 bashio::log.info "Setze Datenbank-Persistenz..."
 mkdir -p /data/db
 
-# Falls Wallos beim Image-Build schon eine leere DB erstellt hat, rüberkopieren (nur wenn /data noch leer ist)
-if [ ! -f /data/db/wallos.db ] && [ -f /var/www/html/db/wallos.db ]; then
-    cp -a /var/www/html/db/* /data/db/
-fi
-
-# Original löschen und Symlink setzen
 rm -rf /var/www/html/db
 ln -sf /data/db /var/www/html/db
 
-# Rechte vergeben
 chown -R nginx:nginx /data/db
 chmod -R 777 /data/db
 
@@ -48,23 +43,34 @@ ln -sf /data/wallos/tmp /var/www/html/.tmp
 chmod -R 777 /data/wallos/logos
 chmod -R 777 /data/wallos/tmp
 
-# 4. Web-Verzeichnis Rechte
+# 4. Wallos System-Start (Zwingend erforderlich gegen weiße Seite)
+bashio::log.info "Prüfe Wallos Datenbank-Status..."
+if [ ! -f /data/db/wallos.db ]; then
+    php /var/www/html/endpoints/cronjobs/createdatabase.php || true
+fi
+
+bashio::log.info "Führe Wallos System-Checks aus..."
+cd /var/www/html/endpoints/db
+php migrate.php || true
+cd /var/www/html
+
+# 5. Web-Verzeichnis Rechte
 chmod -R 755 /var/www/html
 chown -R nginx:nginx /var/www/html
 
-# 5. PHP-FPM Konfiguration
+# 6. PHP-FPM Konfiguration
 mkdir -p /run/php
 chown -R nginx:nginx /run/php
 sed -i 's/user = .*/user = nginx/' /etc/php83/php-fpm.d/www.conf
 sed -i 's/group = .*/group = nginx/' /etc/php83/php-fpm.d/www.conf
 
-# 6. PHP-FPM starten
+# 7. PHP-FPM starten
 bashio::log.info "Starting PHP-FPM..."
 php-fpm83 -R -D
 
 # Wait for PHP-FPM to be ready
 sleep 2
 
-# 7. Nginx starten
+# 8. Nginx starten
 bashio::log.info "Starting Nginx web server..."
 exec nginx -g "daemon off;"

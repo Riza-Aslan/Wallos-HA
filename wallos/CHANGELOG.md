@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.4.1
+
+- Fix: Resolved white screen issue by restoring native Wallos database initialization and migration scripts
+
 ## 2.4.0
 
 - Major Refactoring: Removed legacy SQL hacks and simplified directory persistence to allow native UI database imports
