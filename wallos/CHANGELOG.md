@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.2
+
+- Added auto-migration for existing databases to the new directory structure and fixed initial setup crash
+
 ## 2.3.1
 
 - Refactored database persistence from file-level to directory-level to prevent SQLite WAL-file loss upon container restart

@@ -34,18 +34,26 @@ ln -sf /data/wallos/tmp /var/www/html/.tmp
 chmod -R 777 /data/wallos/logos
 chmod -R 777 /data/wallos/tmp
 
-bashio::log.info "Isoliere das gesamte Datenbank-Verzeichnis..."
-
-# 1. Dauerhaften Ordner in /data erstellen
+bashio::log.info "Isoliere das Datenbank-Verzeichnis..."
 mkdir -p /data/db
 
-# 2. Original-Ordner im Container komplett löschen
+# 1. Alte Datenbank in den neuen Ordner umziehen, falls vorhanden
+if [ -f /data/wallos.db ]; then
+    bashio::log.info "Verschiebe bestehende Datenbank in den neuen Ordner..."
+    mv /data/wallos.db /data/db/wallos.db
+fi
+
+# 2. Falls der Ordner IMMER NOCH leer ist, sauber initialisieren!
+if [ ! -f /data/db/wallos.db ]; then
+    bashio::log.info "Keine Datenbank gefunden. Initialisiere sauberes Fundament..."
+    mkdir -p /var/www/html/db
+    php /var/www/html/endpoints/cronjobs/createdatabase.php
+    mv /var/www/html/db/* /data/db/ 2>/dev/null || true
+fi
+
+# 3. Ordner-Symlink setzen
 rm -rf /var/www/html/db
-
-# 3. Den gesamten Ordner als Symlink setzen
 ln -sf /data/db /var/www/html/db
-
-# 4. Rechte für den gesamten Ordner setzen
 chown -R nginx:nginx /data/db
 chmod -R 777 /data/db
 
