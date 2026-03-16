@@ -63,7 +63,8 @@ RUN mkdir -p /var/www/html/db && \
     mkdir -p /var/www/html/.tmp && \
     chmod -R 777 /var/www/html/db && \
     chmod -R 777 /var/www/html/images/uploads/logos && \
-    chmod -R 777 /var/www/html/.tmp
+    chmod -R 777 /var/www/html/.tmp && \
+    chmod -R 755 /var/www/html
 
 # Fix line endings and permissions for s6 service
 RUN sed -i 's/\r$//' /etc/services.d/wallos/run && \
