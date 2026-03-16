@@ -42,7 +42,7 @@ fi
 
 # Run database migrations
 bashio::log.info "Running database migrations..."
-sleep 2
+sleep 5
 cd /var/www/html/endpoints/db
 php migrate.php || true
 cd /var/www/html
