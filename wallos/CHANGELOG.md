@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.2
+
+- Fix: Resolved redirect loop after database import by disabling internal HTTPS enforcement
+
 ## 1.0.0
 
 - Initial release
