@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.1
+
+- Docs: Improved documentation with correct URLs, ports, and English translations
+
 ## 2.5.0
 
 - Docs: Added Home Assistant REST sensor integration guide and UI examples
