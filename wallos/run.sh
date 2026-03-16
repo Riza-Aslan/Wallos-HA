@@ -17,7 +17,6 @@ export DISABLE_LOGIN="${DISABLE_LOGIN:-false}"
 export DISABLE_REGISTRATION="${DISABLE_REGISTRATION:-true}"
 export MAX_USERS="${MAX_USERS:-0}"
 export ENABLE_EMAIL_VERIFICATION="${ENABLE_EMAIL_VERIFICATION:-false}"
-export ENABLE_SSO="${ENABLE_SSO:-true}"
 
 # SMTP Settings
 export SMTP_ADDRESS="${SMTP_ADDRESS:-}"
@@ -54,12 +53,6 @@ fi
 # Run database migrations
 echo "Running database migrations..."
 php /var/www/html/endpoints/db/migrate.php
-
-# Apply SSO patch if enabled
-if [ "$ENABLE_SSO" = "true" ]; then
-    echo "Applying SSO patch..."
-    php /var/www/html/sso_patch.php || echo "SSO patch failed, continuing..."
-fi
 
 # Apply environment-based settings to database
 echo "Applying configuration from environment variables..."

@@ -128,14 +128,10 @@ RUN tr -d '\r' < /etc/cron.d/cronjobs > /etc/cron.d/cronjobs.tmp && \
     mkdir -p /var/www/html/.tmp && \
     chown -R www-data:www-data /var/www/html
 
-# Copy run script as s6-overlay service
-COPY --chmod=0755 run.sh /etc/s6-overlay/s6-rc.d/wallos/run
-RUN echo "oneshot" > /etc/s6-overlay/s6-rc.d/wallos/type && \
-    mkdir -p /etc/s6-overlay/s6-rc.d/user/contents.d && \
-    touch /etc/s6-overlay/s6-rc.d/user/contents.d/wallos
-
-# Fix Windows line endings
-RUN sed -i 's/\r$//' /etc/s6-overlay/s6-rc.d/wallos/run
+# Create s6-overlay service for wallos
+RUN mkdir -p /etc/services.d/wallos
+COPY run.sh /etc/services.d/wallos/run
+RUN sed -i 's/\r$//' /etc/services.d/wallos/run && chmod a+x /etc/services.d/wallos/run
 
 # Expose port 80 for Nginx
 EXPOSE 80
