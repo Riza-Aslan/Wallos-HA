@@ -26,20 +26,7 @@ RUN apk add --no-cache \
     php${PHP_VERSION}-openssl \
     php${PHP_VERSION}-zip \
     php${PHP_VERSION}-xml \
-    php${PHP_VERSION}-session \
-    php${PHP_VERSION}-tokenizer \
-    php${PHP_VERSION}-xmlwriter \
-    php${PHP_VERSION}-simplexml \
-    php${PHP_VERSION}-phar \
-    php${PHP_VERSION}-ctype \
-    php${PHP_VERSION}-fileinfo \
-    php${PHP_VERSION}-xmlreader \
-    php${PHP_VERSION}-posix \
-    php${PHP_VERSION}-iconv \
-    php${PHP_VERSION}-exif \
-    php${PHP_VERSION}-sodium \
-    php${PHP_VERSION}-opcache \
-    php${PHP_VERSION}-pecl-imagick \
+    php${PHP_VERSION}-imagick \
     sqlite \
     sqlite-dev \
     curl \
