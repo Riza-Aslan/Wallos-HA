@@ -5,6 +5,10 @@ bashio::log.info "==================================================="
 bashio::log.info " Starting Wallos Add-on..."
 bashio::log.info "==================================================="
 
+# Debug: Check /data contents
+bashio::log.info "Inhalt von /data beim Start:"
+ls -R /data
+
 # Get timezone from config
 TIMEZONE=$(bashio::config 'timezone')
 if [ -n "${TIMEZONE}" ]; then
