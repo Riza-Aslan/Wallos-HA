@@ -56,7 +56,7 @@ if sqlite3 /data/wallos.db "PRAGMA table_info(settings);" | grep -qE 'val|value'
     sqlite3 /data/wallos.db "UPDATE settings SET val = 'https://hass.as-lan.eu' WHERE name = 'url';" || true
     sqlite3 /data/wallos.db "UPDATE settings SET value = 'https://hass.as-lan.eu' WHERE name = 'url';" || true
 else
-    bashio::log.warn "Alte Datenbank-Struktur erkannt. Überspringe SQL-Fix, Nginx übernimmt."
+    bashio::log.warning "Alte Datenbank-Struktur erkannt. Überspringe SQL-Fix, Nginx übernimmt."
 fi
 
 # Set permissions for web directory
@@ -77,6 +77,10 @@ chown -R nginx:nginx /run/php
 # Configure PHP-FPM for Alpine (user is nginx, not www-data)
 sed -i 's/user = .*/user = nginx/' /etc/php83/php-fpm.d/www.conf
 sed -i 's/group = .*/group = nginx/' /etc/php83/php-fpm.d/www.conf
+
+# Nginx Konfiguration für Proxy-Betrieb anpassen (Redirect-Loop Fix)
+bashio::log.info "Passe Nginx für Proxy-Betrieb an..."
+sed -i 's/fastcgi_params;/fastcgi_params;\n        fastcgi_param HTTPS on;/' /etc/nginx/http.d/default.conf
 
 # Start PHP-FPM in background (allow root with -R)
 bashio::log.info "Starting PHP-FPM..."

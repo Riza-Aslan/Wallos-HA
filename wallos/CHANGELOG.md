@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.8
+
+- Fix: Corrected bashio log command and forced HTTPS param in Nginx to break redirect loops
+
 ## 2.2.7
 
 - Fix: Resolved redirect loop via Nginx fastcgi_param and improved DB schema compatibility
