@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.6.0
+
+- Docs: Added comprehensive API documentation with all endpoints and 6 REST sensors
+
 ## 2.5.2
 
 - Docs: Updated Data Storage and Redirect Loop sections, replaced homeassistant.local with localhost
