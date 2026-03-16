@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.5
+
+- Critical: Fixed database persistence and dynamic column detection for redirect loops
+
 ## 2.2.4
 
 - Improved SQL fix for redirect loops (compatibility for different DB schemas)

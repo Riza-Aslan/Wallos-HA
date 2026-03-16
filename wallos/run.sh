@@ -33,34 +33,29 @@ chmod -R 777 /data/wallos/tmp
 # Verzeichnis sicherstellen
 mkdir -p /var/www/html/db
 
-if [ ! -f /data/wallos.db ]; then
-    bashio::log.info "Erstelle neue Wallos Datenbank..."
-    # Nutze das Wallos-eigene Skript zur Erstellung
+if [ -f /data/wallos.db ]; then
+    bashio::log.info "Persistente Datenbank gefunden. Verlinke..."
+    ln -sf /data/wallos.db /var/www/html/db/wallos.db
+else
+    bashio::log.info "Keine Datenbank gefunden. Initialisiere neu..."
     cd /var/www/html/endpoints/cronjobs
     php createdatabase.php
     cd /var/www/html
-
-    # Die erstellte Datenbank nach /data verschieben
-    if [ -f /var/www/html/db/wallos.db ]; then
-        mv /var/www/html/db/wallos.db /data/wallos.db
-    else
-        # Fallback, falls das Skript woanders speichert
-        touch /data/wallos.db
-    fi
+    mv /var/www/html/db/wallos.db /data/wallos.db
+    ln -sf /data/wallos.db /var/www/html/db/wallos.db
 fi
 
-# Symbolischen Link setzen
-ln -sf /data/wallos.db /var/www/html/db/wallos.db
+# Automatische Erkennung der Spalte (val oder value) für den Redirect-Fix
+COLUMN=$(sqlite3 /data/wallos.db "PRAGMA table_info(settings);" | grep -E 'value|val' | cut -d'|' -f2 | head -n 1)
+
+if [ ! -z "$COLUMN" ]; then
+    bashio::log.info "Nutze Spalte '$COLUMN' für Redirect-Fix..."
+    sqlite3 /data/wallos.db "UPDATE settings SET $COLUMN = '0' WHERE name = 'https';" || true
+    sqlite3 /data/wallos.db "UPDATE settings SET $COLUMN = 'https://hass.as-lan.eu' WHERE name = 'url';" || true
+fi
+
 chown nginx:nginx /data/wallos.db
 chmod 777 /data/wallos.db
-
-# Deaktiviere HTTPS-Zwang (Redirect-Loop Fix)
-bashio::log.info "Deaktiviere HTTPS-Zwang (Redirect-Loop Fix)..."
-# Wir versuchen beide gängigen Spaltennamen, falls einer fehlschlägt
-sqlite3 /data/wallos.db "UPDATE settings SET value = '0' WHERE name = 'https';" || true
-sqlite3 /data/wallos.db "UPDATE settings SET val = '0' WHERE name = 'https';" || true
-sqlite3 /data/wallos.db "UPDATE settings SET value = 'https://hass.as-lan.eu' WHERE name = 'url';" || true
-sqlite3 /data/wallos.db "UPDATE settings SET val = 'https://hass.as-lan.eu' WHERE name = 'url';" || true
 
 # Set permissions for web directory
 chmod -R 755 /var/www/html
