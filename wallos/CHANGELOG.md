@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.2
+
+- Docs: Updated Data Storage and Redirect Loop sections, replaced homeassistant.local with localhost
+
 ## 2.5.1
 
 - Docs: Improved documentation with correct URLs, ports, and English translations
