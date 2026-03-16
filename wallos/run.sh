@@ -41,7 +41,7 @@ php /var/www/html/endpoints/db/migrate.php || true
 
 # Start PHP-FPM in background
 bashio::log.info "Starting PHP-FPM..."
-php-fpm83 -D
+php-fpm -D
 
 # Wait for PHP-FPM to be ready
 sleep 2
