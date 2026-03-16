@@ -40,19 +40,18 @@ RUN mkdir -p /var/www/html && \
 
 # Configure PHP-FPM
 RUN sed -i "s|;daemonize = yes|daemonize = no|g" /etc/php82/php-fpm.conf && \
-    sed -i "s|user = nobody|user = www-data|g" /etc/php82/php-fpm.d/www.conf && \
-    sed -i "s|group = nobody|group = www-data|g" /etc/php82/php-fpm.d/www.conf && \
+    sed -i "s|user = nobody|user = root|g" /etc/php82/php-fpm.d/www.conf && \
+    sed -i "s|group = nobody|group = root|g" /etc/php82/php-fpm.d/www.conf && \
     sed -i "s|listen = 127.0.0.1:9000|listen = /var/run/php-fpm.sock|g" /etc/php82/php-fpm.d/www.conf && \
-    sed -i "s|;listen.owner = nobody|listen.owner = www-data|g" /etc/php82/php-fpm.d/www.conf && \
-    sed -i "s|;listen.group = nobody|listen.group = www-data|g" /etc/php82/php-fpm.d/www.conf && \
+    sed -i "s|;listen.owner = nobody|listen.owner = root|g" /etc/php82/php-fpm.d/www.conf && \
+    sed -i "s|;listen.group = nobody|listen.group = root|g" /etc/php82/php-fpm.d/www.conf && \
     sed -i "s|;listen.mode = 0660|listen.mode = 0666|g" /etc/php82/php-fpm.d/www.conf
 
 # Configure NGINX
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Copy run script
-COPY run.sh /run.sh
-RUN chmod a+x /run.sh
+# Copy rootfs (s6 services and init scripts)
+COPY rootfs /
 
 # Create necessary directories and set permissions
 RUN mkdir -p /var/www/html/db && \
@@ -60,10 +59,10 @@ RUN mkdir -p /var/www/html/db && \
     mkdir -p /var/www/html/.tmp && \
     chmod -R 777 /var/www/html/db && \
     chmod -R 777 /var/www/html/images/uploads/logos && \
-    chmod -R 777 /var/www/html/.tmp
+    chmod -R 777 /var/www/html/.tmp && \
+    chmod a+x /etc/cont-init.d/* && \
+    chmod a+x /etc/services.d/*/run
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
     CMD curl -f http://localhost/health.php || exit 1
-
-CMD [ "/run.sh" ]

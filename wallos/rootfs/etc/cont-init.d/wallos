@@ -2,7 +2,7 @@
 set -e
 
 bashio::log.info "==================================================="
-bashio::log.info " Starting Wallos Add-on..."
+bashio::log.info " Initializing Wallos Add-on..."
 bashio::log.info "==================================================="
 
 # Get timezone from config
@@ -29,7 +29,6 @@ ln -sf "${DATA_PATH}/tmp" /var/www/html/.tmp
 chmod -R 777 "${DATA_PATH}/db"
 chmod -R 777 "${DATA_PATH}/logos"
 chmod -R 777 "${DATA_PATH}/tmp"
-chown -R www-data:www-data /var/www/html
 
 # Initialize database if it doesn't exist
 if [ ! -f "${DATA_PATH}/db/wallos.db" ]; then
@@ -41,13 +40,4 @@ fi
 bashio::log.info "Running database migrations..."
 php /var/www/html/endpoints/db/migrate.php || true
 
-# Start PHP-FPM in background
-bashio::log.info "Starting PHP-FPM..."
-php-fpm -D
-
-# Wait for PHP-FPM to be ready
-sleep 2
-
-# Start Nginx
-bashio::log.info "Starting Nginx web server..."
-exec nginx -g "daemon off;"
+bashio::log.info "Wallos initialization complete!"
