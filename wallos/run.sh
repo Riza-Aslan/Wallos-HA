@@ -11,6 +11,7 @@ if [ -n "${TIMEZONE}" ]; then
     bashio::log.info "Setting timezone to ${TIMEZONE}"
     cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime
     echo "${TIMEZONE}" > /etc/timezone
+    export TZ="${TIMEZONE}"
 fi
 
 # Ensure data directory exists and has correct permissions
@@ -18,6 +19,20 @@ DATA_PATH="/data/wallos"
 mkdir -p "${DATA_PATH}/db"
 mkdir -p "${DATA_PATH}/logos"
 mkdir -p "${DATA_PATH}/tmp"
+
+# Backup existing data and create symlinks
+if [ -d "/var/www/html/db" ] && [ ! -L "/var/www/html/db" ]; then
+    cp -r /var/www/html/db/* "${DATA_PATH}/db/" 2>/dev/null || true
+    rm -rf /var/www/html/db
+fi
+if [ -d "/var/www/html/images/uploads/logos" ] && [ ! -L "/var/www/html/images/uploads/logos" ]; then
+    cp -r /var/www/html/images/uploads/logos/* "${DATA_PATH}/logos/" 2>/dev/null || true
+    rm -rf /var/www/html/images/uploads/logos
+fi
+if [ -d "/var/www/html/.tmp" ] && [ ! -L "/var/www/html/.tmp" ]; then
+    cp -r /var/www/html/.tmp/* "${DATA_PATH}/tmp/" 2>/dev/null || true
+    rm -rf /var/www/html/.tmp
+fi
 
 # Create symlinks for persistent storage
 ln -sf "${DATA_PATH}/db" /var/www/html/db
@@ -28,6 +43,7 @@ ln -sf "${DATA_PATH}/tmp" /var/www/html/.tmp
 chmod -R 777 "${DATA_PATH}/db"
 chmod -R 777 "${DATA_PATH}/logos"
 chmod -R 777 "${DATA_PATH}/tmp"
+chown -R www-data:www-data /var/www/html
 
 # Initialize database if it doesn't exist
 if [ ! -f "${DATA_PATH}/db/wallos.db" ]; then
@@ -39,13 +55,6 @@ fi
 bashio::log.info "Running database migrations..."
 php /var/www/html/endpoints/db/migrate.php || true
 
-# Start PHP-FPM in background
-bashio::log.info "Starting PHP-FPM..."
-php-fpm -D
-
-# Wait for PHP-FPM to be ready
-sleep 2
-
-# Start Nginx
-bashio::log.info "Starting Nginx web server..."
-exec nginx -g "daemon off;"
+# Use the original startup script
+bashio::log.info "Starting Wallos services..."
+exec /var/www/html/startup.sh
