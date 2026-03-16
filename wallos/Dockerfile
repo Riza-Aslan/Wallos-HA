@@ -28,6 +28,9 @@ RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositor
     php83-openssl \
     php83-zip \
     php83-xml \
+    php83-session \
+    php83-tokenizer \
+    php83-xmlwriter \
     sqlite \
     curl \
     jq \
@@ -44,11 +47,11 @@ RUN mkdir -p /var/www/html && \
 
 # Configure PHP-FPM
 RUN sed -i "s|;daemonize = yes|daemonize = no|g" /etc/php83/php-fpm.conf && \
-    sed -i "s|user = nobody|user = root|g" /etc/php83/php-fpm.d/www.conf && \
-    sed -i "s|group = nobody|group = root|g" /etc/php83/php-fpm.d/www.conf && \
+    sed -i "s|user = nobody|user = nginx|g" /etc/php83/php-fpm.d/www.conf && \
+    sed -i "s|group = nobody|group = nginx|g" /etc/php83/php-fpm.d/www.conf && \
     sed -i "s|listen = 127.0.0.1:9000|listen = /run/php/php-fpm.sock|g" /etc/php83/php-fpm.d/www.conf && \
-    sed -i "s|;listen.owner = nobody|listen.owner = root|g" /etc/php83/php-fpm.d/www.conf && \
-    sed -i "s|;listen.group = nobody|listen.group = root|g" /etc/php83/php-fpm.d/www.conf && \
+    sed -i "s|;listen.owner = nobody|listen.owner = nginx|g" /etc/php83/php-fpm.d/www.conf && \
+    sed -i "s|;listen.group = nobody|listen.group = nginx|g" /etc/php83/php-fpm.d/www.conf && \
     sed -i "s|;listen.mode = 0660|listen.mode = 0666|g" /etc/php83/php-fpm.d/www.conf
 
 # Configure NGINX

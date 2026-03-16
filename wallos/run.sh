@@ -30,6 +30,7 @@ chmod -R 777 "${DATA_PATH}/db"
 chmod -R 777 "${DATA_PATH}/logos"
 chmod -R 777 "${DATA_PATH}/tmp"
 chmod -R 755 /var/www/html
+chown -R nginx:nginx /var/www/html
 
 # Initialize database if it doesn't exist
 if [ ! -f "${DATA_PATH}/db/wallos.db" ]; then
@@ -47,11 +48,11 @@ cd /var/www/html
 
 # Create PHP socket directory
 mkdir -p /run/php
-chown -R www-data:www-data /run/php
+chown -R nginx:nginx /run/php
 
-# Configure PHP-FPM to run as root
-sed -i 's/user = .*/user = root/' /etc/php83/php-fpm.d/www.conf
-sed -i 's/group = .*/group = root/' /etc/php83/php-fpm.d/www.conf
+# Configure PHP-FPM for Alpine (user is nginx, not www-data)
+sed -i 's/user = .*/user = nginx/' /etc/php83/php-fpm.d/www.conf
+sed -i 's/group = .*/group = nginx/' /etc/php83/php-fpm.d/www.conf
 
 # Start PHP-FPM in background (allow root with -R)
 bashio::log.info "Starting PHP-FPM..."
