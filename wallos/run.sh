@@ -9,6 +9,10 @@ bashio::log.info "==================================================="
 bashio::log.info "Inhalt von /data beim Start:"
 ls -R /data
 
+# Nginx Fix: HTTPS-Header für Proxy-Betrieb erzwingen (stoppt Redirect-Loop)
+bashio::log.info "Passe Nginx für Proxy-Betrieb an..."
+sed -i 's/fastcgi_params;/fastcgi_params;\n        fastcgi_param HTTPS on;/' /etc/nginx/http.d/default.conf
+
 # Get timezone from config
 TIMEZONE=$(bashio::config 'timezone')
 if [ -n "${TIMEZONE}" ]; then
@@ -36,7 +40,7 @@ if [ -f /data/wallos.db ]; then
     bashio::log.info "Verlinke persistente Datenbank..."
     rm -f /var/www/html/db/wallos.db
     ln -sf /data/wallos.db /var/www/html/db/wallos.db
-    chown nginx:nginx /data/wallos.db
+    chown nginx:nginx /data/wallos.db /var/www/html/db/wallos.db
     chmod 777 /data/wallos.db
 else
     bashio::log.info "Keine Datenbank gefunden. Initialisiere neu..."
@@ -46,7 +50,7 @@ else
     mv /var/www/html/db/wallos.db /data/wallos.db
     rm -f /var/www/html/db/wallos.db
     ln -sf /data/wallos.db /var/www/html/db/wallos.db
-    chown nginx:nginx /data/wallos.db
+    chown nginx:nginx /data/wallos.db /var/www/html/db/wallos.db
     chmod 777 /data/wallos.db
 fi
 
@@ -79,10 +83,6 @@ chown -R nginx:nginx /run/php
 # Configure PHP-FPM for Alpine (user is nginx, not www-data)
 sed -i 's/user = .*/user = nginx/' /etc/php83/php-fpm.d/www.conf
 sed -i 's/group = .*/group = nginx/' /etc/php83/php-fpm.d/www.conf
-
-# Nginx Konfiguration für Proxy-Betrieb anpassen (Redirect-Loop Fix)
-bashio::log.info "Passe Nginx für Proxy-Betrieb an..."
-sed -i 's/fastcgi_params;/fastcgi_params;\n        fastcgi_param HTTPS on;/' /etc/nginx/http.d/default.conf
 
 # Start PHP-FPM in background (allow root with -R)
 bashio::log.info "Starting PHP-FPM..."

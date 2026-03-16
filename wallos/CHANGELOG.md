@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.0
+
+- Critical fix: Corrected bashio logging and prioritized Nginx redirect fix
+
 ## 2.2.9
 
 - Bugfix: Corrected bashio log command and improved symlink reliability for persistent storage
