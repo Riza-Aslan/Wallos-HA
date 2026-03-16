@@ -15,35 +15,41 @@ if [ -n "${TIMEZONE}" ]; then
 fi
 
 # Ensure data directory exists and has correct permissions
-DATA_PATH="/data/wallos"
-mkdir -p "${DATA_PATH}/db"
-mkdir -p "${DATA_PATH}/logos"
-mkdir -p "${DATA_PATH}/tmp"
+mkdir -p /data/wallos/logos
+mkdir -p /data/wallos/tmp
 
 # Create symlinks for persistent storage
-ln -sf "${DATA_PATH}/db" /var/www/html/db
-ln -sf "${DATA_PATH}/logos" /var/www/html/images/uploads/logos
-ln -sf "${DATA_PATH}/tmp" /var/www/html/.tmp
+ln -sf /data/wallos/logos /var/www/html/images/uploads/logos
+ln -sf /data/wallos/tmp /var/www/html/.tmp
 
-# Set permissions
-chmod -R 777 "${DATA_PATH}/db"
-chmod -R 777 "${DATA_PATH}/logos"
-chmod -R 777 "${DATA_PATH}/tmp"
+# Set permissions for logos and tmp
+chmod -R 777 /data/wallos/logos
+chmod -R 777 /data/wallos/tmp
+
+# Sicherstellen, dass das Datenbank-Verzeichnis im Web-Ordner existiert
+mkdir -p /var/www/html/db
+
+# Falls die Datenbank noch nicht in /data liegt, dorthin verschieben oder neu erstellen
+if [ ! -f /data/wallos.db ]; then
+    bashio::log.info "Initialisiere persistente Datenbank in /data..."
+    # Falls durch den Build eine leere DB in /var/www/html/db liegt, diese als Basis nehmen
+    [ -f /var/www/html/db/wallos.db ] && mv /var/www/html/db/wallos.db /data/wallos.db
+    touch /data/wallos.db
+fi
+
+# Symbolischen Link setzen, damit Wallos die Datenbank in /data findet
+ln -sf /data/wallos.db /var/www/html/db/wallos.db
+chown nginx:nginx /data/wallos.db
+chmod 777 /data/wallos.db
+
+# Set permissions for web directory
 chmod -R 755 /var/www/html
 chown -R nginx:nginx /var/www/html
 
-# Initialize database if it doesn't exist
-if [ ! -f "${DATA_PATH}/db/wallos.db" ]; then
-    bashio::log.info "Creating new Wallos database..."
-    cd /var/www/html/endpoints/cronjobs
-    php createdatabase.php || true
-    cd /var/www/html
-fi
-
-# Run database migrations
-bashio::log.info "Running database migrations..."
-sleep 5
+bashio::log.info "Führe Datenbank-Migrationen aus..."
 cd /var/www/html/endpoints/db
+# Wir warten kurz, um Sperr-Konflikte zu vermeiden
+sleep 2
 php migrate.php || true
 cd /var/www/html
 

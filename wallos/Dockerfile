@@ -62,13 +62,10 @@ COPY nginx.conf /etc/nginx/nginx.conf
 # Copy run script to s6 service directory
 COPY run.sh /etc/services.d/wallos/run
 
-# Create necessary directories and set permissions
+# Create necessary directories (DB will be created at runtime in /data)
 RUN mkdir -p /var/www/html/db && \
     mkdir -p /var/www/html/images/uploads/logos && \
     mkdir -p /var/www/html/.tmp && \
-    chmod -R 777 /var/www/html/db && \
-    chmod -R 777 /var/www/html/images/uploads/logos && \
-    chmod -R 777 /var/www/html/.tmp && \
     chmod -R 755 /var/www/html
 
 # Fix line endings and permissions for s6 service
