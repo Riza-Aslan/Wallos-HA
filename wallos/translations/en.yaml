@@ -1,0 +1,6 @@
+configuration:
+  timezone:
+    name: Timezone
+    description: Set the timezone for Wallos. This affects date/time displays and scheduled tasks.
+network:
+  80/tcp: Wallos Web Interface

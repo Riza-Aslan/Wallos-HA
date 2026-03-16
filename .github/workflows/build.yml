@@ -42,17 +42,16 @@ jobs:
         id: version
         run: echo "version=$(date +'%Y.%m.%d')" >> $GITHUB_OUTPUT
 
-      - name: Update version in config.json
+      - name: Update version in config.yaml
         run: |
-          jq --arg version "${{ steps.version.outputs.version }}" '.version = $version' wallos/config.json > wallos/config.json.tmp
-          mv wallos/config.json.tmp wallos/config.json
+          sed -i "s/^version: .*/version: ${{ steps.version.outputs.version }}/" wallos/config.yaml
 
       - name: Commit version update
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git checkout main
-          git add wallos/config.json
+          git add wallos/config.yaml
           git diff --staged --quiet || git commit -m "Update version to ${{ steps.version.outputs.version }}"
           git push origin main
         env:
