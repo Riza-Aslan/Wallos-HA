@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.0
+
+- Docs: Added Home Assistant REST sensor integration guide and UI examples
+
 ## 2.4.1
 
 - Fix: Resolved white screen issue by restoring native Wallos database initialization and migration scripts
