@@ -129,14 +129,14 @@ RUN tr -d '\r' < /etc/cron.d/cronjobs > /etc/cron.d/cronjobs.tmp && \
     chown -R www-data:www-data /var/www/html
 
 # Copy run script
-COPY run.sh /run.sh
+COPY run.sh /usr/local/bin/run.sh
 
 # Fix Windows line endings and set permissions
-RUN sed -i 's/\r$//' /run.sh && chmod 777 /run.sh
+RUN sed -i 's/\r$//' /usr/local/bin/run.sh && chmod 777 /usr/local/bin/run.sh
 
 # Expose port 80 for Nginx
 EXPOSE 80
 
 # Start the application
-ENTRYPOINT ["/run.sh"]
+ENTRYPOINT ["/usr/local/bin/run.sh"]
 CMD []
