@@ -36,12 +36,18 @@ if [ ! -f "${DATA_PATH}/db/wallos.db" ]; then
     bashio::log.info "Creating new Wallos database..."
     cd /var/www/html/endpoints/cronjobs
     php createdatabase.php || true
+    cd /var/www/html
 fi
 
 # Run database migrations
 bashio::log.info "Running database migrations..."
 cd /var/www/html/endpoints/db
 php migrate.php || true
+cd /var/www/html
+
+# Create PHP socket directory
+mkdir -p /run/php
+chown -R www-data:www-data /run/php
 
 # Configure PHP-FPM to run as root
 sed -i 's/user = .*/user = root/' /etc/php83/php-fpm.d/www.conf

@@ -46,7 +46,7 @@ RUN mkdir -p /var/www/html && \
 RUN sed -i "s|;daemonize = yes|daemonize = no|g" /etc/php83/php-fpm.conf && \
     sed -i "s|user = nobody|user = root|g" /etc/php83/php-fpm.d/www.conf && \
     sed -i "s|group = nobody|group = root|g" /etc/php83/php-fpm.d/www.conf && \
-    sed -i "s|listen = 127.0.0.1:9000|listen = /var/run/php-fpm.sock|g" /etc/php83/php-fpm.d/www.conf && \
+    sed -i "s|listen = 127.0.0.1:9000|listen = /run/php/php-fpm.sock|g" /etc/php83/php-fpm.d/www.conf && \
     sed -i "s|;listen.owner = nobody|listen.owner = root|g" /etc/php83/php-fpm.d/www.conf && \
     sed -i "s|;listen.group = nobody|listen.group = root|g" /etc/php83/php-fpm.d/www.conf && \
     sed -i "s|;listen.mode = 0660|listen.mode = 0666|g" /etc/php83/php-fpm.d/www.conf
