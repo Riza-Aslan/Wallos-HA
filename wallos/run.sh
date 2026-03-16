@@ -1,14 +1,24 @@
-#!/usr/bin/with-contenv bashio
+#!/bin/bash
 set -e
 
-bashio::log.info "==================================================="
-bashio::log.info " Initializing Wallos Add-on..."
-bashio::log.info "==================================================="
+echo "==================================================="
+echo " Starting Wallos Add-on..."
+echo "==================================================="
+
+# Source bashio if available
+if [ -f /usr/lib/bashio/bashio.sh ]; then
+    source /usr/lib/bashio/bashio.sh
+fi
 
 # Get timezone from config
-TIMEZONE=$(bashio::config 'timezone')
+if command -v bashio &> /dev/null; then
+    TIMEZONE=$(bashio::config 'timezone')
+else
+    TIMEZONE="Europe/Berlin"
+fi
+
 if [ -n "${TIMEZONE}" ]; then
-    bashio::log.info "Setting timezone to ${TIMEZONE}"
+    echo "Setting timezone to ${TIMEZONE}"
     cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime
     echo "${TIMEZONE}" > /etc/timezone
     export TZ="${TIMEZONE}"
@@ -32,12 +42,21 @@ chmod -R 777 "${DATA_PATH}/tmp"
 
 # Initialize database if it doesn't exist
 if [ ! -f "${DATA_PATH}/db/wallos.db" ]; then
-    bashio::log.info "Creating new Wallos database..."
+    echo "Creating new Wallos database..."
     php /var/www/html/endpoints/cronjobs/createdatabase.php || true
 fi
 
 # Run database migrations
-bashio::log.info "Running database migrations..."
+echo "Running database migrations..."
 php /var/www/html/endpoints/db/migrate.php || true
 
-bashio::log.info "Wallos initialization complete!"
+# Start PHP-FPM in background
+echo "Starting PHP-FPM..."
+php-fpm -D
+
+# Wait for PHP-FPM to be ready
+sleep 2
+
+# Start Nginx
+echo "Starting Nginx web server..."
+exec nginx -g "daemon off;"
