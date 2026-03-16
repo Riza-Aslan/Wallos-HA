@@ -45,14 +45,16 @@ else
     ln -sf /data/wallos.db /var/www/html/db/wallos.db
 fi
 
-# Automatische Erkennung der Spalte (val oder value) für den Redirect-Fix
-COLUMN=$(sqlite3 /data/wallos.db "PRAGMA table_info(settings);" | grep -E 'value|val' | cut -d'|' -f2 | head -n 1)
+# Datenbank Diagnose
+bashio::log.info "--- Datenbank Diagnose ---"
+sqlite3 /data/wallos.db ".schema settings" || true
 
-if [ ! -z "$COLUMN" ]; then
-    bashio::log.info "Nutze Spalte '$COLUMN' für Redirect-Fix..."
-    sqlite3 /data/wallos.db "UPDATE settings SET $COLUMN = '0' WHERE name = 'https';" || true
-    sqlite3 /data/wallos.db "UPDATE settings SET $COLUMN = 'https://hass.as-lan.eu' WHERE name = 'url';" || true
-fi
+bashio::log.info "Deaktiviere HTTPS-Zwang (Redirect-Loop Fix)..."
+# Wallos nutzt standardmäßig 'val'. Wir setzen beide sicherheitshalber.
+sqlite3 /data/wallos.db "UPDATE settings SET val = '0' WHERE name = 'https';" || true
+sqlite3 /data/wallos.db "UPDATE settings SET value = '0' WHERE name = 'https';" || true
+sqlite3 /data/wallos.db "UPDATE settings SET val = 'https://hass.as-lan.eu' WHERE name = 'url';" || true
+sqlite3 /data/wallos.db "UPDATE settings SET value = 'https://hass.as-lan.eu' WHERE name = 'url';" || true
 
 chown nginx:nginx /data/wallos.db
 chmod 777 /data/wallos.db

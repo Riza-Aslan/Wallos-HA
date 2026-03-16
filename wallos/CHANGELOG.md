@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.6
+
+- Fixed persistent storage mapping and improved SQL migration compatibility
+
 ## 2.2.5
 
 - Critical: Fixed database persistence and dynamic column detection for redirect loops
