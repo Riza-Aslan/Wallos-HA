@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.7
+
+- Fix: Resolved redirect loop via Nginx fastcgi_param and improved DB schema compatibility
+
 ## 2.2.6
 
 - Fixed persistent storage mapping and improved SQL migration compatibility
