@@ -33,16 +33,22 @@ chmod -R 777 "${DATA_PATH}/tmp"
 # Initialize database if it doesn't exist
 if [ ! -f "${DATA_PATH}/db/wallos.db" ]; then
     bashio::log.info "Creating new Wallos database..."
-    php /var/www/html/endpoints/cronjobs/createdatabase.php || true
+    cd /var/www/html
+    php endpoints/cronjobs/createdatabase.php || true
 fi
 
 # Run database migrations
 bashio::log.info "Running database migrations..."
-php /var/www/html/endpoints/db/migrate.php || true
+cd /var/www/html
+php endpoints/db/migrate.php || true
 
-# Start PHP-FPM in background
+# Configure PHP-FPM to run as root
+sed -i 's/user = .*/user = root/' /etc/php83/php-fpm.d/www.conf
+sed -i 's/group = .*/group = root/' /etc/php83/php-fpm.d/www.conf
+
+# Start PHP-FPM in background (allow root with -R)
 bashio::log.info "Starting PHP-FPM..."
-php-fpm -D
+php-fpm83 -R -D
 
 # Wait for PHP-FPM to be ready
 sleep 2

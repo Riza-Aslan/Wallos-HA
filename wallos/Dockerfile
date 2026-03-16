@@ -9,29 +9,31 @@ LABEL io.hass.description="Open-Source Subscription Tracker"
 # Set environment variables
 ENV WALLOS_VERSION="2.38.0"
 
-# Install minimal dependencies
-RUN apk add --no-cache \
+# Install minimal dependencies (PHP 8.3 from edge)
+RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
+    echo "https://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
+    apk add --no-cache \
     nginx \
-    php82 \
-    php82-fpm \
-    php82-sqlite3 \
-    php82-pdo_sqlite \
-    php82-curl \
-    php82-dom \
-    php82-gd \
-    php82-intl \
-    php82-mbstring \
-    php82-openssl \
-    php82-zip \
-    php82-xml \
+    php83 \
+    php83-fpm \
+    php83-sqlite3 \
+    php83-pdo_sqlite \
+    php83-curl \
+    php83-dom \
+    php83-gd \
+    php83-intl \
+    php83-mbstring \
+    php83-openssl \
+    php83-zip \
+    php83-xml \
     sqlite \
     curl \
     jq \
     tzdata
 
 # Create symlinks for php commands
-RUN ln -sf /usr/bin/php82 /usr/bin/php && \
-    ln -sf /usr/sbin/php-fpm82 /usr/sbin/php-fpm
+RUN ln -sf /usr/bin/php83 /usr/bin/php && \
+    ln -sf /usr/sbin/php-fpm83 /usr/sbin/php-fpm
 
 # Download and extract Wallos
 RUN mkdir -p /var/www/html && \
@@ -39,13 +41,13 @@ RUN mkdir -p /var/www/html && \
     tar xz -C /var/www/html --strip-components=1
 
 # Configure PHP-FPM
-RUN sed -i "s|;daemonize = yes|daemonize = no|g" /etc/php82/php-fpm.conf && \
-    sed -i "s|user = nobody|user = root|g" /etc/php82/php-fpm.d/www.conf && \
-    sed -i "s|group = nobody|group = root|g" /etc/php82/php-fpm.d/www.conf && \
-    sed -i "s|listen = 127.0.0.1:9000|listen = /var/run/php-fpm.sock|g" /etc/php82/php-fpm.d/www.conf && \
-    sed -i "s|;listen.owner = nobody|listen.owner = root|g" /etc/php82/php-fpm.d/www.conf && \
-    sed -i "s|;listen.group = nobody|listen.group = root|g" /etc/php82/php-fpm.d/www.conf && \
-    sed -i "s|;listen.mode = 0660|listen.mode = 0666|g" /etc/php82/php-fpm.d/www.conf
+RUN sed -i "s|;daemonize = yes|daemonize = no|g" /etc/php83/php-fpm.conf && \
+    sed -i "s|user = nobody|user = root|g" /etc/php83/php-fpm.d/www.conf && \
+    sed -i "s|group = nobody|group = root|g" /etc/php83/php-fpm.d/www.conf && \
+    sed -i "s|listen = 127.0.0.1:9000|listen = /var/run/php-fpm.sock|g" /etc/php83/php-fpm.d/www.conf && \
+    sed -i "s|;listen.owner = nobody|listen.owner = root|g" /etc/php83/php-fpm.d/www.conf && \
+    sed -i "s|;listen.group = nobody|listen.group = root|g" /etc/php83/php-fpm.d/www.conf && \
+    sed -i "s|;listen.mode = 0660|listen.mode = 0666|g" /etc/php83/php-fpm.d/www.conf
 
 # Configure NGINX
 COPY nginx.conf /etc/nginx/nginx.conf
