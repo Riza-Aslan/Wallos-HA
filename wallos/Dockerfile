@@ -50,9 +50,8 @@ RUN sed -i "s|;daemonize = yes|daemonize = no|g" /etc/php82/php-fpm.conf && \
 # Configure NGINX
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Copy run script
-COPY run.sh /run.sh
-RUN chmod a+x /run.sh
+# Copy run script to s6 service directory
+COPY run.sh /etc/services.d/wallos/run
 
 # Create necessary directories and set permissions
 RUN mkdir -p /var/www/html/db && \
@@ -62,8 +61,6 @@ RUN mkdir -p /var/www/html/db && \
     chmod -R 777 /var/www/html/images/uploads/logos && \
     chmod -R 777 /var/www/html/.tmp
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
-    CMD curl -f http://localhost/health.php || exit 1
-
-CMD [ "/run.sh" ]
+# Fix line endings and permissions for s6 service
+RUN sed -i 's/\r$//' /etc/services.d/wallos/run && \
+    chmod a+x /etc/services.d/wallos/run
