@@ -138,4 +138,5 @@ RUN sed -i 's/\r$//' /run.sh
 EXPOSE 80
 
 # Start the application
-CMD ["/run.sh"]
+ENTRYPOINT ["/run.sh"]
+CMD []
