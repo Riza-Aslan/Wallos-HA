@@ -60,7 +60,9 @@ RUN sed -i "s|;daemonize = yes|daemonize = no|g" /etc/php83/php-fpm.conf && \
 RUN echo "upload_max_filesize = 50M" >> /etc/php83/php.ini && \
     echo "post_max_size = 50M" >> /etc/php83/php.ini && \
     echo "max_execution_time = 300" >> /etc/php83/php.ini && \
-    echo "memory_limit = 256M" >> /etc/php83/php.ini
+    echo "memory_limit = 256M" >> /etc/php83/php.ini && \
+    echo "file_uploads = On" >> /etc/php83/php.ini && \
+    echo "upload_tmp_dir = /var/www/html/.tmp" >> /etc/php83/php.ini
 
 # Configure NGINX
 COPY nginx.conf /etc/nginx/nginx.conf

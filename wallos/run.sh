@@ -45,6 +45,11 @@ chown -R nginx:nginx /data/wallos/tmp
 chmod -R 777 /data/wallos/logos
 chmod -R 777 /data/wallos/tmp
 
+# Ensure temp directory is writable
+mkdir -p /var/www/html/.tmp
+chown -R nginx:nginx /var/www/html/.tmp
+chmod -R 777 /var/www/html/.tmp
+
 # 4. Wallos System-Start (Zwingend erforderlich gegen weiße Seite)
 bashio::log.info "Prüfe Wallos Datenbank-Status..."
 if [ ! -f /data/db/wallos.db ]; then
