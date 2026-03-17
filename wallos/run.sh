@@ -40,6 +40,8 @@ mkdir -p /data/wallos/logos
 mkdir -p /data/wallos/tmp
 ln -sf /data/wallos/logos /var/www/html/images/uploads/logos
 ln -sf /data/wallos/tmp /var/www/html/.tmp
+chown -R nginx:nginx /data/wallos/logos
+chown -R nginx:nginx /data/wallos/tmp
 chmod -R 777 /data/wallos/logos
 chmod -R 777 /data/wallos/tmp
 

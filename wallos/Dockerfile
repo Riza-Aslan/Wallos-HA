@@ -56,6 +56,12 @@ RUN sed -i "s|;daemonize = yes|daemonize = no|g" /etc/php83/php-fpm.conf && \
     sed -i "s|;listen.group = nobody|listen.group = nginx|g" /etc/php83/php-fpm.d/www.conf && \
     sed -i "s|;listen.mode = 0660|listen.mode = 0666|g" /etc/php83/php-fpm.d/www.conf
 
+# Configure PHP upload settings
+RUN echo "upload_max_filesize = 50M" >> /etc/php83/php.ini && \
+    echo "post_max_size = 50M" >> /etc/php83/php.ini && \
+    echo "max_execution_time = 300" >> /etc/php83/php.ini && \
+    echo "memory_limit = 256M" >> /etc/php83/php.ini
+
 # Configure NGINX
 COPY nginx.conf /etc/nginx/nginx.conf
 
