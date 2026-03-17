@@ -2,7 +2,7 @@ name: Wallos
 description: >-
   Wallos is a powerful, open-source, self-hostable personal subscription
   tracker designed to help you manage recurring expenses and subscriptions.
-version: 2.6.0
+version: 2.6.1
 slug: wallos
 url: https://github.com/Riza-Aslan/Wallos-HA
 arch:
