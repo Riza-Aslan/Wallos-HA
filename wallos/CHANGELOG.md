@@ -1,5 +1,13 @@
 # Changelog
 
+---
+
+❤️ **Support this project:** If you find this add-on useful, please consider supporting its development:
+- [GitHub Sponsors](https://github.com/sponsors/Riza-Aslan)
+- [PayPal](https://www.paypal.com/paypalme/rizaaslan)
+
+---
+
 ## 2.6.20
 
 - Fix: Changed panel_icon to icon-32.png for better sidebar display
