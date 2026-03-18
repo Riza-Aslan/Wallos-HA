@@ -8,6 +8,12 @@
 
 ---
 
+## 2.6.22
+
+- Fix: Improved DNS configuration with Cloudflare DNS (1.1.1.1) as additional fallback
+- Fix: Increased timeout for external API connectivity tests
+- Fix: Added separate DNS resolution test for debugging
+
 ## 2.6.21
 
 - Fix: Changed panel_icon to mdi:wallet for sidebar compatibility (SVG required)

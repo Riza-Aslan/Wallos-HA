@@ -27,16 +27,26 @@ fi
 
 # 1.5 DNS-Konfiguration für externe API-Aufrufe
 bashio::log.info "Prüfe DNS-Konfiguration..."
-if [ ! -f /etc/resolv.conf ] || ! grep -q "nameserver" /etc/resolv.conf; then
-    echo "nameserver 8.8.8.8" > /etc/resolv.conf
-    echo "nameserver 8.8.4.4" >> /etc/resolv.conf
-fi
+# Backup existing resolv.conf
+cp /etc/resolv.conf /etc/resolv.conf.bak 2>/dev/null || true
+# Add Google DNS as fallback
+echo "nameserver 8.8.8.8" > /etc/resolv.conf
+echo "nameserver 8.8.4.4" >> /etc/resolv.conf
+echo "nameserver 1.1.1.1" >> /etc/resolv.conf
 
 # Teste externe Konnektivität
 bashio::log.info "Teste externe Konnektivität..."
-curl -s --connect-timeout 5 https://api.clearbit.com/v1/domains/find?name=google.com > /dev/null && \
+# Test DNS resolution first
+if nslookup api.clearbit.com > /dev/null 2>&1; then
+    bashio::log.info "DNS-Auflösung funktioniert"
+else
+    bashio::log.warning "DNS-Auflösung fehlgeschlagen"
+fi
+
+# Test Clearbit API
+curl -s --connect-timeout 10 --max-time 15 https://api.clearbit.com/v1/domains/find?name=google.com > /dev/null 2>&1 && \
     bashio::log.info "Clearbit API erreichbar" || \
-    bashio::log.warning "Clearbit API nicht erreichbar - Websuche könnte nicht funktionieren"
+    bashio::log.warning "Clearbit API nicht erreichbar - Websuche könnte nicht funktionieren (kein Internet oder API down)"
 
 # 2. Persistenz
 bashio::log.info "Setze Datenbank-Persistenz..."
