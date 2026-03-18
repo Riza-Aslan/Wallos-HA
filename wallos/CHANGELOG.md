@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.6.18
+
+- Docs: Completely overhauled README with cleaner structure
+- Docs: Added proper credit to Wallos project without overdoing it
+- Docs: Removed custom icon section (not relevant for HA users)
+
 ## 2.6.17
 
 - Docs: Added proper credits and acknowledgements for the Wallos project
