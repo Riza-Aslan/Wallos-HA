@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.6.13
+
+- Fix: Added php83-filter and php83-phar extensions for logo web search functionality
+- Fix: Removed duplicate PHP extension loading from php.ini
+- Fix: Added allow_url_include = Off for security
+
 ## 2.6.12
 
 - Revert: Rolled back problematic Nginx configuration changes that broke web interface

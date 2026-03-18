@@ -37,6 +37,8 @@ RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositor
     php83-bcmath \
     php83-sockets \
     php83-posix \
+    php83-filter \
+    php83-phar \
     sqlite \
     curl \
     git \
@@ -70,11 +72,7 @@ RUN echo "upload_max_filesize = 50M" >> /etc/php83/php.ini && \
     echo "file_uploads = On" >> /etc/php83/php.ini && \
     echo "upload_tmp_dir = /var/www/html/.tmp" >> /etc/php83/php.ini && \
     echo "allow_url_fopen = On" >> /etc/php83/php.ini && \
-    echo "extension=gd" >> /etc/php83/php.ini && \
-    echo "extension=calendar" >> /etc/php83/php.ini && \
-    echo "extension=bcmath" >> /etc/php83/php.ini && \
-    echo "extension=sockets" >> /etc/php83/php.ini && \
-    echo "extension=posix" >> /etc/php83/php.ini
+    echo "allow_url_include = Off" >> /etc/php83/php.ini
 
 # Configure NGINX
 COPY nginx.conf /etc/nginx/nginx.conf
