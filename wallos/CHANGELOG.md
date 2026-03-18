@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.6.20
+
+- Fix: Changed panel_icon to icon-32.png for better sidebar display
+- Fix: Using smaller icon (32x32) for sidebar compatibility
+
 ## 2.6.19
 
 - Fix: Restored sponsor badges in README
