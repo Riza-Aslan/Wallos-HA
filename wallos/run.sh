@@ -35,31 +35,23 @@ ln -sf /data/db /var/www/html/db
 chown -R nginx:nginx /data/db
 chmod -R 777 /data/db
 
-# 3. Persistenz für Logos und Temp
+# 3. Persistenz für Logos und Temp - direkt einbinden
 mkdir -p /data/wallos/logos
 mkdir -p /data/wallos/tmp
 
-# Migrate existing logos from container to persistent storage
-if [ -d /var/www/html/images/uploads/logos ] && [ "$(ls -A /var/www/html/images/uploads/logos 2>/dev/null)" ]; then
-    bashio::log.info "Migriere bestehende Logos in persistentes Verzeichnis..."
-    cp -r /var/www/html/images/uploads/logos/* /data/wallos/logos/ 2>/dev/null || true
-fi
-
-# Remove old directory and create symlink
+# Logos: Persistentes Verzeichnis direkt einbinden
 rm -rf /var/www/html/images/uploads/logos
 ln -sf /data/wallos/logos /var/www/html/images/uploads/logos
+
+# Temp: Persistentes Verzeichnis direkt einbinden
+rm -rf /var/www/html/.tmp
 ln -sf /data/wallos/tmp /var/www/html/.tmp
 
-# Set permissions
+# Berechtigungen setzen
 chown -R nginx:nginx /data/wallos/logos
 chown -R nginx:nginx /data/wallos/tmp
 chmod -R 777 /data/wallos/logos
 chmod -R 777 /data/wallos/tmp
-
-# Ensure temp directory is writable
-mkdir -p /var/www/html/.tmp
-chown -R nginx:nginx /var/www/html/.tmp
-chmod -R 777 /var/www/html/.tmp
 
 # 4. Wallos System-Start (Zwingend erforderlich gegen weiße Seite)
 bashio::log.info "Prüfe Wallos Datenbank-Status..."
