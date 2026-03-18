@@ -38,8 +38,19 @@ chmod -R 777 /data/db
 # 3. Persistenz für Logos und Temp
 mkdir -p /data/wallos/logos
 mkdir -p /data/wallos/tmp
+
+# Migrate existing logos from container to persistent storage
+if [ -d /var/www/html/images/uploads/logos ] && [ "$(ls -A /var/www/html/images/uploads/logos 2>/dev/null)" ]; then
+    bashio::log.info "Migriere bestehende Logos in persistentes Verzeichnis..."
+    cp -r /var/www/html/images/uploads/logos/* /data/wallos/logos/ 2>/dev/null || true
+fi
+
+# Remove old directory and create symlink
+rm -rf /var/www/html/images/uploads/logos
 ln -sf /data/wallos/logos /var/www/html/images/uploads/logos
 ln -sf /data/wallos/tmp /var/www/html/.tmp
+
+# Set permissions
 chown -R nginx:nginx /data/wallos/logos
 chown -R nginx:nginx /data/wallos/tmp
 chmod -R 777 /data/wallos/logos

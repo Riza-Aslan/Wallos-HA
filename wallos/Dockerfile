@@ -84,7 +84,7 @@ COPY run.sh /etc/services.d/wallos/run
 
 # Create necessary directories (DB will be created at runtime in /data)
 RUN mkdir -p /var/www/html/db && \
-    mkdir -p /var/www/html/images/uploads/logos && \
+    mkdir -p /var/www/html/images/uploads && \
     mkdir -p /var/www/html/.tmp && \
     chmod -R 755 /var/www/html
 
