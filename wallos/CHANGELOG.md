@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.6.17
+
+- Docs: Added proper credits and acknowledgements for the Wallos project
+- Docs: Highlighted that this is just a HA wrapper for the real Wallos application
+- Docs: Added sponsor links for the original Wallos project
+
 ## 2.6.16
 
 - Fix: Added external API connectivity test for logo web search
