@@ -8,6 +8,11 @@
 
 ---
 
+## 2.6.21
+
+- Fix: Changed panel_icon to mdi:wallet for sidebar compatibility (SVG required)
+- Note: PNG/WEBP icons are not supported in HA sidebar, only SVG or MDI icons
+
 ## 2.6.20
 
 - Fix: Changed panel_icon to icon-32.png for better sidebar display
