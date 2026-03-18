@@ -25,6 +25,13 @@ if ! grep -q "fastcgi_param HTTPS on;" /etc/nginx/http.d/default.conf; then
     sed -i 's/fastcgi_params;/fastcgi_params;\n        fastcgi_param HTTPS on;/' /etc/nginx/http.d/default.conf
 fi
 
+# 1.5 DNS-Konfiguration für externe API-Aufrufe
+bashio::log.info "Prüfe DNS-Konfiguration..."
+if [ ! -f /etc/resolv.conf ] || ! grep -q "nameserver" /etc/resolv.conf; then
+    echo "nameserver 8.8.8.8" > /etc/resolv.conf
+    echo "nameserver 8.8.4.4" >> /etc/resolv.conf
+fi
+
 # 2. Persistenz
 bashio::log.info "Setze Datenbank-Persistenz..."
 mkdir -p /data/db

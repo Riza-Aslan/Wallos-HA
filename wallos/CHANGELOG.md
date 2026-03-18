@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.6.15
+
+- Fix: Added DNS configuration for external API calls (logo web search)
+- Fix: Ensured Google DNS servers are available for external requests
+- Docs: Updated README with current version and sponsor links
+
 ## 2.6.14
 
 - Fix: Removed non-existent php83-filter and php83-phar packages (filter is built-in)
