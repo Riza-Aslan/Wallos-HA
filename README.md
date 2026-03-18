@@ -2,10 +2,11 @@
 
 [![GitHub Release](https://img.shields.io/github/v/release/Riza-Aslan/Wallos-HA)](https://github.com/Riza-Aslan/Wallos-HA/releases)
 [![License](https://img.shields.io/github/license/Riza-Aslan/Wallos-HA)](https://github.com/Riza-Aslan/Wallos-HA/blob/main/LICENSE)
+[![GitHub Sponsors](https://img.shields.io/github/sponsors/Riza-Aslan)](https://github.com/sponsors/Riza-Aslan)
 
 Home Assistant Add-on for [Wallos](https://github.com/ellite/Wallos) - a powerful, open-source, self-hostable personal subscription tracker.
 
-**Current Version:** 2.6.18
+**Current Version:** 2.6.20
 
 ## About
 
