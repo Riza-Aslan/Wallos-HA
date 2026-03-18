@@ -37,8 +37,6 @@ RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositor
     php83-bcmath \
     php83-sockets \
     php83-posix \
-    php83-filter \
-    php83-phar \
     sqlite \
     curl \
     git \

@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.6.14
+
+- Fix: Removed non-existent php83-filter and php83-phar packages (filter is built-in)
+- Fix: Build errors resolved
+
 ## 2.6.13
 
 - Fix: Added php83-filter and php83-phar extensions for logo web search functionality
