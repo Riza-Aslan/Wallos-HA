@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.6.19
+
+- Fix: Restored sponsor badges in README
+- Fix: Changed panel_icon to use real Wallos icon (local/icon.png)
+
 ## 2.6.18
 
 - Docs: Completely overhauled README with cleaner structure
