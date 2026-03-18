@@ -53,6 +53,10 @@ chown -R nginx:nginx /data/wallos/tmp
 chmod -R 777 /data/wallos/logos
 chmod -R 777 /data/wallos/tmp
 
+# Debug: Symlinks überprüfen
+bashio::log.info "Logo-Symlink: $(readlink -f /var/www/html/images/uploads/logos)"
+bashio::log.info "Temp-Symlink: $(readlink -f /var/www/html/.tmp)"
+
 # 4. Wallos System-Start (Zwingend erforderlich gegen weiße Seite)
 bashio::log.info "Prüfe Wallos Datenbank-Status..."
 if [ ! -f /data/db/wallos.db ]; then
