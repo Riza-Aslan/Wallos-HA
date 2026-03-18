@@ -32,6 +32,12 @@ if [ ! -f /etc/resolv.conf ] || ! grep -q "nameserver" /etc/resolv.conf; then
     echo "nameserver 8.8.4.4" >> /etc/resolv.conf
 fi
 
+# Teste externe Konnektivität
+bashio::log.info "Teste externe Konnektivität..."
+curl -s --connect-timeout 5 https://api.clearbit.com/v1/domains/find?name=google.com > /dev/null && \
+    bashio::log.info "Clearbit API erreichbar" || \
+    bashio::log.warning "Clearbit API nicht erreichbar - Websuche könnte nicht funktionieren"
+
 # 2. Persistenz
 bashio::log.info "Setze Datenbank-Persistenz..."
 mkdir -p /data/db

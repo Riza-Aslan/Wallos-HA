@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.6.16
+
+- Fix: Added external API connectivity test for logo web search
+- Docs: Added custom icon configuration guide to README
+- Docs: Enhanced sponsor section with support reasons
+
 ## 2.6.15
 
 - Fix: Added DNS configuration for external API calls (logo web search)
