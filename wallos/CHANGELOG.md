@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.6.12
+
+- Revert: Rolled back problematic Nginx configuration changes that broke web interface
+- Fix: Restored working configuration from version 2.6.8
+- Note: Logo URL double-slash issue still under investigation
+
+## 2.6.8
+
+- Fix: Normalized double slashes in logo URLs via Nginx merge_slashes directive
+- Debug: Added symlink verification logging at startup
+
+## 2.6.7
+
+- Fix: Direct persistent binding of logo and temp directories without migration
+- Simplified directory structure for better reliability
+
 ## 2.6.0
 
 - Docs: Added comprehensive API documentation with all endpoints and 6 REST sensors
