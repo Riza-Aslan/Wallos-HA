@@ -6,7 +6,7 @@
 
 Home Assistant Add-on for [Wallos](https://github.com/ellite/Wallos) - a powerful, open-source, self-hostable personal subscription tracker.
 
-**Current Version:** 2.6.21
+**Current Version:** 2.6.22
 
 ## About
 

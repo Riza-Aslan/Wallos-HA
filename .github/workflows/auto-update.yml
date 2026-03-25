@@ -1,0 +1,82 @@
+name: Auto Update Wallos
+
+on:
+  schedule:
+    # Täglich um 4:00 UTC prüfen
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  check-update:
+    name: Check for Wallos updates
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Get current Wallos version from Dockerfile
+        id: current
+        run: |
+          # Extract current WALLOS_VERSION from Dockerfile default
+          CURRENT_VERSION=$(grep -E '^ARG WALLOS_VERSION=' wallos/Dockerfile | sed 's/ARG WALLOS_VERSION=//')
+          echo "current_version=${CURRENT_VERSION}" >> $GITHUB_OUTPUT
+
+      - name: Get latest Wallos version from GitHub API
+        id: latest
+        run: |
+          # Fetch latest release from Wallos repository
+          LATEST_VERSION=$(curl -s https://api.github.com/repos/ellite/Wallos/releases/latest | jq -r '.tag_name')
+          echo "latest_version=${LATEST_VERSION}" >> $GITHUB_OUTPUT
+
+      - name: Compare versions
+        id: compare
+        run: |
+          CURRENT="${{ steps.current.outputs.current_version }}"
+          LATEST="${{ steps.latest.outputs.latest_version }}"
+          
+          echo "Current Wallos version: $CURRENT"
+          echo "Latest Wallos version: $LATEST"
+          
+          if [ "$CURRENT" = "$LATEST" ]; then
+            echo "up_to_date=true" >> $GITHUB_OUTPUT
+            echo "No update needed."
+          else
+            echo "up_to_date=false" >> $GITHUB_OUTPUT
+            echo "Update available!"
+          fi
+
+      - name: Create Pull Request
+        if: steps.compare.outputs.up_to_date == 'false'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'chore: update Wallos to ${{ steps.latest.outputs.latest_version }}'
+          title: 'Update Wallos to ${{ steps.latest.outputs.latest_version }}'
+          body: |
+            ## 📦 Automatic Update
+
+            This PR updates Wallos from `${{ steps.current.outputs.current_version }}` to `${{ steps.latest.outputs.latest_version }}`.
+
+            ### Changes
+            - Updated `wallos/Dockerfile` with new Wallos version
+            - The build pipeline will automatically build and push new container images
+
+            **Note:** The add-on version in `wallos/config.yaml` was NOT changed. This PR only updates the Wallos application version.
+
+            ---
+            *This PR was created automatically by the Auto Update Wallos workflow.*
+          branch: 'auto-update-wallos-${{ steps.latest.outputs.latest_version }}'
+          base: main
+          delete-branch: true
+          labels: |
+            automated
+            dependencies
+            wallos-update

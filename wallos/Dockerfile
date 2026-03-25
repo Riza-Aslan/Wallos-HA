@@ -1,4 +1,5 @@
 ARG BUILD_FROM
+ARG WALLOS_VERSION=v4.6.2
 FROM ${BUILD_FROM}
 
 # Set version label
@@ -48,7 +49,7 @@ RUN ln -sf /usr/bin/php83 /usr/bin/php && \
     ln -sf /usr/sbin/php-fpm83 /usr/sbin/php-fpm
 
 # Download and extract Wallos
-RUN git clone --depth 1 --branch v4.6.2 https://github.com/ellite/Wallos.git /tmp/wallos_download && \
+RUN git clone --depth 1 --branch ${WALLOS_VERSION} https://github.com/ellite/Wallos.git /tmp/wallos_download && \
     mkdir -p /var/www/html && \
     cp -a /tmp/wallos_download/. /var/www/html/ && \
     rm -rf /tmp/wallos_download
