@@ -100,13 +100,7 @@ jobs:
             type=raw,value=latest
             type=raw,value=${{ needs.prepare.outputs.version || 'latest' }}
 
-      - name: Get latest Wallos version
-        id: wallos_version
-        if: github.event_name != 'pull_request'
-        run: |
-          # Get the latest release tag from Wallos repository
-          WALLOS_VERSION=$(curl -s https://api.github.com/repos/ellite/Wallos/releases/latest | grep '"tag_name"' | head -1 | sed -E 's/.*"([^"]+)".*/\1/')
-          echo "wallos_version=${WALLOS_VERSION}" >> $GITHUB_OUTPUT
+
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -119,6 +113,5 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             BUILD_FROM=${{ matrix.base_image }}
-            WALLOS_VERSION=${{ steps.wallos_version.outputs.wallos_version || 'v4.6.2' }}
           cache-from: type=gha
           cache-to: type=gha,mode=max

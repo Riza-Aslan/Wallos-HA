@@ -53,6 +53,18 @@ jobs:
             echo "Update available!"
           fi
 
+      - name: Update Dockerfile with new Wallos version
+        if: steps.compare.outputs.up_to_date == 'false'
+        run: |
+          LATEST_VERSION="${{ steps.latest.outputs.latest_version }}"
+          echo "Updating Dockerfile to Wallos ${LATEST_VERSION}..."
+          
+          # Replace the WALLOS_VERSION line in Dockerfile
+          sed -i "s/^ARG WALLOS_VERSION=.*/ARG WALLOS_VERSION=${LATEST_VERSION}/" wallos/Dockerfile
+          
+          # Verify the change
+          grep '^ARG WALLOS_VERSION=' wallos/Dockerfile
+
       - name: Create Pull Request
         if: steps.compare.outputs.up_to_date == 'false'
         uses: peter-evans/create-pull-request@v5
