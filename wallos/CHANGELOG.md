@@ -8,6 +8,13 @@
 
 ---
 
+## 4.8.0
+
+- Feat: Update Wallos core to v4.8.0
+- Feat: Automatic update workflow (daily check for new Wallos releases)
+- Fix: Docker ARG scope (move WALLOS_VERSION after FROM)
+- Fix: Build workflow simplified (deterministic, no external API calls)
+
 ## 2.6.22
 
 - Fix: Improved DNS configuration with Cloudflare DNS (1.1.1.1) as additional fallback
