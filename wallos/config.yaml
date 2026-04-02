@@ -2,7 +2,7 @@ name: Wallos
 description: >-
   Wallos is a powerful, open-source, self-hostable personal subscription
   tracker designed to help you manage recurring expenses and subscriptions.
-version: 4.8.0
+version: 4.8.1
 slug: wallos
 url: https://github.com/Riza-Aslan/Wallos-HA
 arch:
@@ -19,6 +19,7 @@ ingress_port: 80
 ingress_entry: /
 panel_icon: mdi:wallet
 panel_title: Wallos
+panel_admin: false
 webui: http://[HOST]:[PORT:80]/
 ports:
   80/tcp: 8282
