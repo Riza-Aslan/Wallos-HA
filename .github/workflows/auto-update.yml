@@ -2,13 +2,13 @@ name: Auto Update Wallos
 
 on:
   schedule:
-    # Täglich um 4:00 UTC prüfen
     - cron: '0 4 * * *'
   workflow_dispatch:
 
+# GLOBALER ENV-BLOCK (Schaltet die Node.js Warnung aus)
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-  
+
 permissions:
   contents: write
   pull-requests: write
@@ -28,20 +28,17 @@ jobs:
       - name: Get current Wallos version from Dockerfile
         id: current
         run: |
-          # Extrahiert die aktuelle Version aus dem Dockerfile
           CURRENT_VERSION=$(grep -E '^ARG WALLOS_VERSION=' wallos/Dockerfile | sed 's/ARG WALLOS_VERSION=//')
           echo "current_version=${CURRENT_VERSION}" >> $GITHUB_OUTPUT
 
       - name: Fetch latest release from Wallos repository
         id: latest
         run: |
-          # API Abfrage mit JQ
           RESPONSE=$(curl -s https://api.github.com/repos/ellite/Wallos/releases/latest)
           LATEST_VERSION=$(echo "$RESPONSE" | jq -r '.tag_name')
           
-          # Sicherheitscheck: Falls API "null" liefert oder leer ist -> Abbruch
           if [ "$LATEST_VERSION" = "null" ] || [ -z "$LATEST_VERSION" ]; then
-            echo "Fehler: Konnte keine Version von der GitHub API abrufen."
+            echo "Fehler: API-Abfrage fehlgeschlagen."
             exit 1
           fi
           
@@ -53,36 +50,23 @@ jobs:
           CURRENT="${{ steps.current.outputs.current_version }}"
           LATEST="${{ steps.latest.outputs.latest_version }}"
           
-          echo "Aktuelle Version im Repo: $CURRENT"
-          echo "Neueste Version verfügbar: $LATEST"
-          
           if [ "$CURRENT" = "$LATEST" ]; then
             echo "up_to_date=true" >> $GITHUB_OUTPUT
-            echo "Alles aktuell. Kein Update nötig."
           else
             echo "up_to_date=false" >> $GITHUB_OUTPUT
-            echo "Update verfügbar!"
           fi
 
       - name: Update files with new Wallos version
         if: steps.compare.outputs.up_to_date == 'false'
         run: |
           LATEST="${{ steps.latest.outputs.latest_version }}"
-          echo "Aktualisiere Dateien auf Wallos $LATEST..."
-          
-          # 1. Dockerfile aktualisieren
           sed -i "s/^ARG WALLOS_VERSION=.*/ARG WALLOS_VERSION=${LATEST}/" wallos/Dockerfile
-          
-          # 2. config.yaml aktualisieren (Add-on Version für Home Assistant)
-          # Entfernt das 'v' vom Tag für die config.yaml (z.B. v4.8.0 -> 4.8.0)
           PLAIN_VERSION=$(echo $LATEST | sed 's/^v//')
           sed -i "s/^version: .*/version: \"${PLAIN_VERSION}\"/" wallos/config.yaml
-          
-          echo "Änderungen vorgenommen:"
-          grep '^ARG WALLOS_VERSION=' wallos/Dockerfile
-          grep '^version:' wallos/config.yaml
 
       - name: Create Pull Request
+        # Wir geben diesem Schritt eine ID, um die PR-Nummer später abzugreifen
+        id: cpr
         if: steps.compare.outputs.up_to_date == 'false'
         uses: peter-evans/create-pull-request@v5
         with:
@@ -90,22 +74,15 @@ jobs:
           commit-message: 'chore: update Wallos to ${{ steps.latest.outputs.latest_version }}'
           title: 'Update Wallos to ${{ steps.latest.outputs.latest_version }}'
           body: |
-            ## 📦 Automatisches Update gefunden
-
-            Dieses PR aktualisiert Wallos von `${{ steps.current.outputs.current_version }}` auf `${{ steps.latest.outputs.latest_version }}`.
-
-            ### Änderungen
-            - **Dockerfile**: `WALLOS_VERSION` auf `${{ steps.latest.outputs.latest_version }}` gesetzt.
-            - **config.yaml**: Add-on Version auf die neue Wallos-Nummer angepasst.
-
-            Nach dem Merge dieses PRs wird die Build-Pipeline automatisch gestartet und das Update erscheint in Home Assistant.
-
-            ---
-            *Dieser PR wurde automatisch vom 'Auto Update Wallos' Workflow erstellt.*
+            ## 📦 Automatisches Update auf ${{ steps.latest.outputs.latest_version }}
+            Dieses PR wurde automatisch erstellt und wird (falls konfiguriert) direkt gemergt.
           branch: 'auto-update-wallos-${{ steps.latest.outputs.latest_version }}'
-          base: main
           delete-branch: true
-          labels: |
-            automated
-            dependencies
-            wallos-update
+
+      - name: Auto-Merge Pull Request
+        # Dieser Schritt führt den Merge automatisch aus
+        if: steps.compare.outputs.up_to_date == 'false' && steps.cpr.outputs.pull-request-number
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr merge ${{ steps.cpr.outputs.pull-request-number }} --merge --delete-branch
