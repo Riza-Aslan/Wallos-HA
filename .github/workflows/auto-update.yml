@@ -6,6 +6,9 @@ on:
     - cron: '0 4 * * *'
   workflow_dispatch:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  
 permissions:
   contents: write
   pull-requests: write
@@ -14,8 +17,6 @@ jobs:
   check-update:
     name: Check for Wallos updates
     runs-on: ubuntu-latest
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # Entfernt die Node.js 20 Deprecation Warnung
     
     steps:
       - name: Checkout repository
