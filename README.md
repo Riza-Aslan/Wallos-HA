@@ -112,7 +112,6 @@ You can integrate your Wallos subscriptions directly as sensors in your Home Ass
 | Endpoint | Description | Parameters |
 |----------|-------------|------------|
 | `/api/subscriptions/get_monthly_cost.php` | Monthly subscription costs | `month`, `year` |
-| `/api/subscriptions/get_yearly_cost.php` | Yearly subscription costs | `year` |
 | `/api/subscriptions/get_subscriptions.php` | List all subscriptions | `member`, `category`, `payment_method`, `state`, `sort`, `convert_currency` |
 | `/api/categories/get_categories.php` | List all categories | - |
 | `/api/currencies/get_currencies.php` | List currencies & main currency | - |
@@ -144,21 +143,7 @@ rest:
         device_class: monetary
         state_class: measurement
 
-  # Sensor 2: Yearly Costs
-  - resource: "http://localhost:8282/api/subscriptions/get_yearly_cost.php"
-    verify_ssl: false
-    scan_interval: 3600
-    params:
-      year: "{{ now().year }}"
-      api_key: !secret wallos_api_key
-    sensor:
-      - name: "Wallos Yearly Cost"
-        value_template: "{{ value_json.yearly_cost | replace(',', '') }}"
-        unit_of_measurement: "€"
-        device_class: monetary
-        state_class: measurement
-
-  # Sensor 3: Active Subscriptions Count
+  # Sensor 2: Active Subscriptions Count
   - resource: "http://localhost:8282/api/subscriptions/get_subscriptions.php"
     verify_ssl: false
     scan_interval: 3600
@@ -172,7 +157,7 @@ rest:
         icon: mdi:wallet-membership
         state_class: measurement
 
-  # Sensor 4: Categories Count
+  # Sensor 3: Categories Count
   - resource: "http://localhost:8282/api/categories/get_categories.php"
     verify_ssl: false
     scan_interval: 3600
@@ -185,7 +170,7 @@ rest:
         icon: mdi:tag-multiple
         state_class: measurement
 
-  # Sensor 5: Payment Methods Count
+  # Sensor 4: Payment Methods Count
   - resource: "http://localhost:8282/api/payment_methods/get_payment_methods.php"
     verify_ssl: false
     scan_interval: 3600
@@ -198,7 +183,7 @@ rest:
         icon: mdi:credit-card-multiple
         state_class: measurement
 
-  # Sensor 6: Household Members Count
+  # Sensor 5: Household Members Count
   - resource: "http://localhost:8282/api/household/get_household.php"
     verify_ssl: false
     scan_interval: 3600
@@ -225,9 +210,6 @@ entities:
   - entity: sensor.wallos_monthly_cost
     name: This Month
     icon: mdi:calendar-month
-  - entity: sensor.wallos_yearly_cost
-    name: This Year
-    icon: mdi:calendar-year
   - entity: sensor.wallos_active_subscriptions
     name: Active
     icon: mdi:wallet-membership
@@ -248,15 +230,6 @@ cards:
       green: 0
       yellow: 200
       red: 400
-  - type: gauge
-    entity: sensor.wallos_yearly_cost
-    name: Yearly
-    min: 0
-    max: 6000
-    severity:
-      green: 0
-      yellow: 2400
-      red: 4800
   - type: statistic
     entity: sensor.wallos_active_subscriptions
     name: Subscriptions
@@ -277,7 +250,6 @@ content: >
   | Metric | Value |
   |--------|-------|
   | Monthly Cost | {{ states('sensor.wallos_monthly_cost') }}€ |
-  | Yearly Cost | {{ states('sensor.wallos_yearly_cost') }}€ |
   | Active Subscriptions | {{ states('sensor.wallos_active_subscriptions') }} |
   | Categories | {{ states('sensor.wallos_categories') }} |
   | Payment Methods | {{ states('sensor.wallos_payment_methods') }} |
