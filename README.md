@@ -6,7 +6,7 @@
 
 Home Assistant Add-on for [Wallos](https://github.com/ellite/Wallos) - a powerful, open-source, self-hostable personal subscription tracker.
 
-**Current Version:** 2.6.22
+**Current Version:** 4.8.0
 
 ## About
 
@@ -23,14 +23,41 @@ This add-on packages [Wallos](https://github.com/ellite/Wallos) for easy install
 
 ## Installation
 
-1. Add this repository to your Home Assistant Add-on Store:
+1. Add this repository to your Home Assistant Add-on Store as a Custom Repository:
    ```
    https://github.com/Riza-Aslan/Wallos-HA
    ```
 2. Install the "Wallos" add-on
 3. Configure the add-on (see Configuration section)
 4. Start the add-on
-5. Access Wallos via the sidebar (Ingress) or directly at `http://localhost:8282`
+5. Access Wallos via the sidebar or directly at `http://[YOUR_HA_IP]:8282`
+
+> **Note on Ingress:** Ingress is fully supported! You can add Wallos to your sidebar and access it remotely, provided your Home Assistant is configured for remote access.
+
+---
+
+## 🛠️ Setup & Optimizations
+
+### Migrating Existing Data
+If you have used Wallos already, you can easily migrate your data:
+1. Go to **Admin** -> **Backup and Recovery** in your old instance.
+2. Create a backup and download it.
+3. Restore it inside the new Wallos-HA instance.
+
+### Server URL Configuration
+To ensure proper routing, copy the Wallos URL from the Home Assistant sidebar and paste it as the **Server-URL** in the Wallos admin settings:
+
+### Seamless Login
+Since you are already logged into Home Assistant, you don't need double authentication. You can turn off the login screen in the Wallos settings for a smoother, seamless experience.
+
+### Visual Integration (HA Theme)
+I've changed the background color of Wallos to match the Home Assistant sidebar color. If you want to customize it further or ensure it matches perfectly, you can add this in the Wallos settings under **Custom CSS**:
+
+```css
+body {
+ background-color: #101215;
+}
+```
 
 ## Configuration
 
@@ -66,15 +93,13 @@ To backup your data, copy the entire `/data/db/` directory to a safe location. T
 
 You can import databases directly through the Wallos web interface. The add-on will automatically handle the persistence without any manual intervention required.
 
-**Note for existing users:** If you previously had a database at `/data/wallos.db`, it will be automatically migrated to `/data/db/wallos.db` on the next startup.
-
 ## 📊 Home Assistant Integration (REST API)
 
 You can integrate your Wallos subscriptions directly as sensors in your Home Assistant dashboard using the official Wallos API. Full API documentation is available at [api.wallosapp.com](https://api.wallosapp.com/).
 
 ### Prerequisites
 
-1. Open Wallos via the Home Assistant sidebar (Ingress) or directly at `http://localhost:8282`
+1. Open Wallos via the Home Assistant sidebar (Ingress) or directly at `(http://[YOUR_HA_IP]:8282)`
 2. Go to **Settings** → **API**
 3. Generate an API key
 4. Add the API key to your `secrets.yaml` (located in `/config/secrets.yaml`):
