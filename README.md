@@ -17,7 +17,7 @@ Home Assistant Add-on for [Wallos](https://github.com/ellite/Wallos) - a powerfu
 
 ## About
 
-This add-on packages [Wallos](https://github.com/ellite/Wallos) for easy installation in Home Assistant. Wallos is developed by [Henrique (ellite)](https://github.com/ellite) and helps you manage recurring expenses and subscriptions with features like:
+This add-on packages [Wallos](https://github.com/ellite/Wallos) for easy installation in Home Assistant. Wallos is developed by [Miguel Ribeiro (ellite)](https://github.com/ellite) and helps you manage recurring expenses and subscriptions with features like:
 
 - **Subscription Management** - Track recurring payments and due dates
 - **Category Management** - Organize expenses into customizable categories
