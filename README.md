@@ -4,6 +4,13 @@
 [![License](https://img.shields.io/github/license/Riza-Aslan/Wallos-HA)](https://github.com/Riza-Aslan/Wallos-HA/blob/main/LICENSE)
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/Riza-Aslan)](https://github.com/sponsors/Riza-Aslan)
 
+## ❤️ Support
+
+If you find this add-on useful, please consider supporting its development:
+
+[![GitHub Sponsors](https://img.shields.io/badge/Sponsor-Riza--Aslan-ea4aaa?logo=github-sponsors&logoColor=white)](https://github.com/sponsors/Riza-Aslan)
+[![PayPal](https://img.shields.io/badge/PayPal-Donate-00457C?logo=paypal&logoColor=white)](https://www.paypal.com/paypalme/rizaaslan)
+
 Home Assistant Add-on for [Wallos](https://github.com/ellite/Wallos) - a powerful, open-source, self-hostable personal subscription tracker.
 
 **Current Version:** 4.8.0
@@ -255,13 +262,6 @@ content: >
   | Payment Methods | {{ states('sensor.wallos_payment_methods') }} |
   | Household Members | {{ states('sensor.wallos_household_members') }} |
 ```
-
-## ❤️ Support
-
-If you find this add-on useful, please consider supporting its development:
-
-[![GitHub Sponsors](https://img.shields.io/badge/Sponsor-Riza--Aslan-ea4aaa?logo=github-sponsors&logoColor=white)](https://github.com/sponsors/Riza-Aslan)
-[![PayPal](https://img.shields.io/badge/PayPal-Donate-00457C?logo=paypal&logoColor=white)](https://www.paypal.com/paypalme/rizaaslan)
 
 ## License
 
