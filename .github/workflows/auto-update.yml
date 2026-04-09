@@ -27,7 +27,7 @@ jobs:
       - name: Get current Wallos version from Dockerfile
         id: current
         run: |
-          # Extract current WALLOS_VERSION from Dockerfile default
+          # Extrahiert die aktuelle Version aus dem Dockerfile
           CURRENT_VERSION=$(grep -E '^ARG WALLOS_VERSION=' wallos/Dockerfile | sed 's/ARG WALLOS_VERSION=//')
           echo "current_version=${CURRENT_VERSION}" >> $GITHUB_OUTPUT
 
@@ -52,28 +52,34 @@ jobs:
           CURRENT="${{ steps.current.outputs.current_version }}"
           LATEST="${{ steps.latest.outputs.latest_version }}"
           
-          echo "Current Wallos version: $CURRENT"
-          echo "Latest Wallos version: $LATEST"
+          echo "Aktuelle Version im Repo: $CURRENT"
+          echo "Neueste Version verfügbar: $LATEST"
           
           if [ "$CURRENT" = "$LATEST" ]; then
             echo "up_to_date=true" >> $GITHUB_OUTPUT
-            echo "No update needed."
+            echo "Alles aktuell. Kein Update nötig."
           else
             echo "up_to_date=false" >> $GITHUB_OUTPUT
-            echo "Update available!"
+            echo "Update verfügbar!"
           fi
 
-      - name: Update Dockerfile with new Wallos version
+      - name: Update files with new Wallos version
         if: steps.compare.outputs.up_to_date == 'false'
         run: |
-          LATEST_VERSION="${{ steps.latest.outputs.latest_version }}"
-          echo "Updating Dockerfile to Wallos ${LATEST_VERSION}..."
+          LATEST="${{ steps.latest.outputs.latest_version }}"
+          echo "Aktualisiere Dateien auf Wallos $LATEST..."
           
-          # Replace the WALLOS_VERSION line in Dockerfile
-          sed -i "s/^ARG WALLOS_VERSION=.*/ARG WALLOS_VERSION=${LATEST_VERSION}/" wallos/Dockerfile
+          # 1. Dockerfile aktualisieren
+          sed -i "s/^ARG WALLOS_VERSION=.*/ARG WALLOS_VERSION=${LATEST}/" wallos/Dockerfile
           
-          # Verify the change
+          # 2. config.yaml aktualisieren (Add-on Version für Home Assistant)
+          # Entfernt das 'v' vom Tag für die config.yaml (z.B. v4.8.0 -> 4.8.0)
+          PLAIN_VERSION=$(echo $LATEST | sed 's/^v//')
+          sed -i "s/^version: .*/version: \"${PLAIN_VERSION}\"/" wallos/config.yaml
+          
+          echo "Änderungen vorgenommen:"
           grep '^ARG WALLOS_VERSION=' wallos/Dockerfile
+          grep '^version:' wallos/config.yaml
 
       - name: Create Pull Request
         if: steps.compare.outputs.up_to_date == 'false'
@@ -83,18 +89,18 @@ jobs:
           commit-message: 'chore: update Wallos to ${{ steps.latest.outputs.latest_version }}'
           title: 'Update Wallos to ${{ steps.latest.outputs.latest_version }}'
           body: |
-            ## 📦 Automatic Update
+            ## 📦 Automatisches Update gefunden
 
-            This PR updates Wallos from `${{ steps.current.outputs.current_version }}` to `${{ steps.latest.outputs.latest_version }}`.
+            Dieses PR aktualisiert Wallos von `${{ steps.current.outputs.current_version }}` auf `${{ steps.latest.outputs.latest_version }}`.
 
-            ### Changes
-            - Updated `wallos/Dockerfile` with new Wallos version
-            - The build pipeline will automatically build and push new container images
+            ### Änderungen
+            - **Dockerfile**: `WALLOS_VERSION` auf `${{ steps.latest.outputs.latest_version }}` gesetzt.
+            - **config.yaml**: Add-on Version auf die neue Wallos-Nummer angepasst.
 
-            **Note:** The add-on version in `wallos/config.yaml` was NOT changed. This PR only updates the Wallos application version.
+            Nach dem Merge dieses PRs wird die Build-Pipeline automatisch gestartet und das Update erscheint in Home Assistant.
 
             ---
-            *This PR was created automatically by the Auto Update Wallos workflow.*
+            *Dieser PR wurde automatisch vom 'Auto Update Wallos' Workflow erstellt.*
           branch: 'auto-update-wallos-${{ steps.latest.outputs.latest_version }}'
           base: main
           delete-branch: true
