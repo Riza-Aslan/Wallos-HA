@@ -14,6 +14,8 @@ jobs:
   check-update:
     name: Check for Wallos updates
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # Entfernt die Node.js 20 Deprecation Warnung
     
     steps:
       - name: Checkout repository
@@ -29,11 +31,19 @@ jobs:
           CURRENT_VERSION=$(grep -E '^ARG WALLOS_VERSION=' wallos/Dockerfile | sed 's/ARG WALLOS_VERSION=//')
           echo "current_version=${CURRENT_VERSION}" >> $GITHUB_OUTPUT
 
-      - name: Get latest Wallos version from GitHub API
+      - name: Fetch latest release from Wallos repository
         id: latest
         run: |
-          # Fetch latest release from Wallos repository
-          LATEST_VERSION=$(curl -s https://api.github.com/repos/ellite/Wallos/releases/latest | jq -r '.tag_name')
+          # API Abfrage mit JQ
+          RESPONSE=$(curl -s https://api.github.com/repos/ellite/Wallos/releases/latest)
+          LATEST_VERSION=$(echo "$RESPONSE" | jq -r '.tag_name')
+          
+          # Sicherheitscheck: Falls API "null" liefert oder leer ist -> Abbruch
+          if [ "$LATEST_VERSION" = "null" ] || [ -z "$LATEST_VERSION" ]; then
+            echo "Fehler: Konnte keine Version von der GitHub API abrufen."
+            exit 1
+          fi
+          
           echo "latest_version=${LATEST_VERSION}" >> $GITHUB_OUTPUT
 
       - name: Compare versions
