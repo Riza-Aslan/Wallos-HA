@@ -54,6 +54,9 @@ If you have used Wallos already, you can easily migrate your data:
 ### Server URL Configuration
 To ensure proper routing, copy the Wallos URL from the Home Assistant sidebar and paste it as the **Server-URL** in the Wallos admin settings:
 
+<img width="1452" height="896" alt="image" src="https://github.com/user-attachments/assets/2b446eb9-6e3e-46ab-8525-48f99cdb5a2d" />
+
+
 ### Seamless Login
 Since you are already logged into Home Assistant, you don't need double authentication. You can turn off the login screen in the Wallos settings for a smoother, seamless experience.
 
