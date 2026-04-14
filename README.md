@@ -61,12 +61,65 @@ To ensure proper routing, copy the Wallos URL from the Home Assistant sidebar an
 Since you are already logged into Home Assistant, you don't need double authentication. You can turn off the login screen in the Wallos settings for a smoother, seamless experience.
 
 ### Visual Integration (HA Theme)
-I've changed the background color of Wallos to match the Home Assistant sidebar color. If you want to customize it further or ensure it matches perfectly, you can add this in the Wallos settings under **Custom CSS**:
+I've changed the Theme of Wallos to match the Home Assistant Graphite Theme (which i'm using). If you want to customize it further or ensure it matches perfectly, you can add this in the Wallos settings under **Custom CSS**:
 
 ```css
-body {
- background-color: #101215;
+/* 
+   Wallos Custom CSS for Graphite Theme Compatibility
+   Paste this into Wallos Settings -> Display Settings -> Custom CSS
+*/
+
+:root {
+    --main-color-rgb: 238, 147, 0;
+    --accent-color-rgb: 238, 147, 0;
+    --background-color: #eaeeee;
+    --background-color-rgb: 234, 235, 238;
+    --header-background-color: #ffffff;
+    --header-background-color-rgb: 255, 255, 255;
+    --box-background-color: #ffffff;
+    --box-background-color-rgb: 255, 255, 255;
+    --box-border-color: #eaeeee;
+    --box-border-color-rgb: 234, 235, 238;
+    --text-color: #131536;
+    --text-color-rgb: 19, 21, 54;
+    --box-shadow: 1px 1px 1px 0px rgba(0, 0, 30, 0.18);
 }
+
+/* Dark Mode Overrides */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --main-color-rgb: 224, 138, 0;
+        --background-color: #101215;
+        --background-color-rgb: 16, 18, 21;
+        --header-background-color: #101215;
+        --header-background-color-rgb: 16, 18, 21;
+        --box-background-color: #23242b;
+        --box-background-color-rgb: 35, 36, 43;
+        --box-border-color: #101215;
+        --box-border-color-rgb: 16, 18, 21;
+        --text-color: #e4e4e7;
+        --text-color-rgb: 228, 228, 231;
+        --box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.12);
+    }
+}
+
+/* Apply rounded corners and font to all relevant elements */
+
+.box, .card, .modal-content, [class*="rounded-"] { 
+    border-radius: 20px !important; 
+    border-width: 0px !important;
+    box-shadow: var(--box-shadow) !important;
+}
+
+body { 
+    background-color: var(--background-color) !important;
+    color: var(--text-color) !important;
+    font-family: Roboto,Noto,sans-serif;
+}
+.subscription {
+  border-radius: 12px!important;
+}
+
 ```
 
 ## Configuration
