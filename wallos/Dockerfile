@@ -7,7 +7,7 @@ LABEL io.hass.name="Wallos"
 LABEL io.hass.description="Open-Source Subscription Tracker"
 
 # Wallos version (must be after FROM to be available in RUN)
-ARG WALLOS_VERSION=v4.8.0
+ARG WALLOS_VERSION=v4.8.2
 
 # Install minimal dependencies (PHP 8.3 from edge)
 RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
