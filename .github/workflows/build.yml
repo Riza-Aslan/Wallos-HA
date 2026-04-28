@@ -41,7 +41,7 @@ jobs:
       - name: Get version from config.yaml
         id: version
         run: |
-          VERSION=$(grep '^version:' wallos/config.yaml | sed 's/version: *//')
+          VERSION=$(grep '^version:' wallos/config.yaml | sed 's/version: *//' | tr -d '"'\'')
           echo "version=${VERSION}" >> $GITHUB_OUTPUT
 
   build:
