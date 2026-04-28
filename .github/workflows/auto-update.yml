@@ -5,9 +5,9 @@ on:
     - cron: '0 4 * * *'
   workflow_dispatch:
 
-# GLOBALER ENV-BLOCK (Schaltet die Node.js Warnung aus)
+# GLOBALER ENV-BLOCK
 env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: false
 
 permissions:
   contents: write
@@ -86,3 +86,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh pr merge ${{ steps.cpr.outputs.pull-request-number }} --merge --delete-branch
+
+      - name: Trigger Build Workflow
+        # Triggert den Build-Workflow nach erfolgreichem Update
+        if: steps.compare.outputs.up_to_date == 'false'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          sleep 10  # Warte kurz, damit der Merge abgeschlossen ist
+          curl -X POST \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+            https://api.github.com/repos/${{ github.repository }}/actions/workflows/build.yml/dispatches \
+            -d '{"ref":"main"}'
