@@ -98,7 +98,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-${{ matrix.arch }}
           tags: |
             type=raw,value=latest
-            type=raw,value=${{ needs.prepare.outputs.version || latest }}
+            type=raw,value=${{ needs.prepare.outputs.version }}
 
 
 
