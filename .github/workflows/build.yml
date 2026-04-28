@@ -1,5 +1,6 @@
 name: Build Wallos HA Add-on
 
+# Build workflow - triggered on changes to wallos/ directory
 on:
   push:
     branches:
