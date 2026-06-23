@@ -8,6 +8,16 @@
 
 ---
 
+## 4.9.6 (2026-06-22)
+### Bug Fixes
+
+* account takeover via email-based account linking ([b75f13d](https://github.com/ellite/Wallos/commit/b75f13d0ffa3ed7e77e8e79e4b9fd3fc528c98d3))
+* harden oidc state validation and session rotation ([#1071](https://github.com/ellite/Wallos/issues/1071)) ([b75f13d](https://github.com/ellite/Wallos/commit/b75f13d0ffa3ed7e77e8e79e4b9fd3fc528c98d3))
+* missing fields when cloning a subscription ([b75f13d](https://github.com/ellite/Wallos/commit/b75f13d0ffa3ed7e77e8e79e4b9fd3fc528c98d3))
+* ssrf via oidc token/userInfo url configuration ([b75f13d](https://github.com/ellite/Wallos/commit/b75f13d0ffa3ed7e77e8e79e4b9fd3fc528c98d3))
+* ssrf via test email notification ([b75f13d](https://github.com/ellite/Wallos/commit/b75f13d0ffa3ed7e77e8e79e4b9fd3fc528c98d3))
+* zip slip path traversal in database restore writes files to webroot ([b75f13d](https://github.com/ellite/Wallos/commit/b75f13d0ffa3ed7e77e8e79e4b9fd3fc528c98d3))
+
 ## 4.9.5 (2026-06-06)
 ### Bug Fixes
 
@@ -772,10 +782,3 @@
 
 * broken avatar upload when using the french language ([cf0d5d3](https://github.com/ellite/Wallos/commit/cf0d5d3df30909a0de7ef84aae2601d805617f90))
 * more deprecation warnings on image uploads ([cf0d5d3](https://github.com/ellite/Wallos/commit/cf0d5d3df30909a0de7ef84aae2601d805617f90))
-
-## 2.21.2 (2024-08-07)
-### Bug Fixes
-
-* add samesite directive to cookies ([8b0325c](https://github.com/ellite/Wallos/commit/8b0325c7d3c672754de220efd52b9ba9de8a9868))
-* service worker precaching logout.php causes user to be logged out ([8b0325c](https://github.com/ellite/Wallos/commit/8b0325c7d3c672754de220efd52b9ba9de8a9868))
-* sort by price ([8b0325c](https://github.com/ellite/Wallos/commit/8b0325c7d3c672754de220efd52b9ba9de8a9868))
