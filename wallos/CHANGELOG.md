@@ -8,13 +8,25 @@
 
 ---
 
-## 5.0.0 (2026-07-11)
-### ⚠ BREAKING CHANGES
+## 5.1.1 (2026-07-12)
+### Bug Fixes
 
-* complete ui overhaul ([#1108](https://github.com/ellite/Wallos/issues/1108))
+* bump version ([#1113](https://github.com/ellite/Wallos/issues/1113)) ([d3b72d3](https://github.com/ellite/Wallos/commit/d3b72d33cd111d9aa2fa619be0098f8423f54eeb))
 
+## 5.1.0 (2026-07-12)
 ### Features
 
+* create dark and light theme versions of the logos when removing background ([8d22f04](https://github.com/ellite/Wallos/commit/8d22f0435372c8874fcc2f42733230cdb2674167))
+
+
+### Bug Fixes
+
+* ajax calls after session expired ([8d22f04](https://github.com/ellite/Wallos/commit/8d22f0435372c8874fcc2f42733230cdb2674167))
+
+## 5.0.0 (2026-07-11)
+### Features
+
+* complete ui overhaul ([#1108](https://github.com/ellite/Wallos/issues/1108))
 * Allow setting beginning of week as Sunday in calendar ([#1010](https://github.com/ellite/Wallos/issues/1010)) ([f01685e](https://github.com/ellite/Wallos/commit/f01685e0eb36690e3ecdcf2f029cae29764e3389))
 * complete ui overhaul ([#1108](https://github.com/ellite/Wallos/issues/1108)) ([11eaf40](https://github.com/ellite/Wallos/commit/11eaf402e841a628c68a805694227ce66c45f6f3))
 * dashboard icons image search ([11eaf40](https://github.com/ellite/Wallos/commit/11eaf402e841a628c68a805694227ce66c45f6f3))
@@ -794,19 +806,3 @@
 
 * export.php csv header typo ([#499](https://github.com/ellite/Wallos/issues/499)) ([6e96c5d](https://github.com/ellite/Wallos/commit/6e96c5d4b0c7264ab37a85e9a8b8062f96f69c5c))
 * typo on export subscriptions to csv ([fed0192](https://github.com/ellite/Wallos/commit/fed0192394e77409dae04d4ab3cdda0ba0c578a4))
-
-## 2.22.1 (2024-08-11)
-### Bug Fixes
-
-* inline items in subscription form out of place ([#489](https://github.com/ellite/Wallos/issues/489)) ([3f33ba0](https://github.com/ellite/Wallos/commit/3f33ba0310af0c903db9bef1dd6668146219142c))
-
-## 2.22.0 (2024-08-09)
-### Features
-
-* admin can manually trigger cronjobs ([1946ac9](https://github.com/ellite/Wallos/commit/1946ac9855696892b9a0790d46623614aa9aab2c))
-
-
-### Bug Fixes
-
-* only allow the system and admin to run the cronjobs ([1946ac9](https://github.com/ellite/Wallos/commit/1946ac9855696892b9a0790d46623614aa9aab2c))
-* reduce size of the log files of the cronjobs ([1946ac9](https://github.com/ellite/Wallos/commit/1946ac9855696892b9a0790d46623614aa9aab2c))
