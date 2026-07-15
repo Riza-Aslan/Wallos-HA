@@ -8,6 +8,19 @@
 
 ---
 
+## 5.2.0 (2026-07-14)
+### Features
+
+* add new logo themed versions generation to add subscription api endpoint ([921fcfd](https://github.com/ellite/Wallos/commit/921fcfd1598d5efcaca584f2ad4df652735399f3))
+* better navigation inside logo search ([921fcfd](https://github.com/ellite/Wallos/commit/921fcfd1598d5efcaca584f2ad4df652735399f3))
+* bottom sheet slide up animation ([921fcfd](https://github.com/ellite/Wallos/commit/921fcfd1598d5efcaca584f2ad4df652735399f3))
+* improve menu navigation on grid mode ([921fcfd](https://github.com/ellite/Wallos/commit/921fcfd1598d5efcaca584f2ad4df652735399f3))
+
+
+### Bug Fixes
+
+* syntax error on nl.js translation file ([921fcfd](https://github.com/ellite/Wallos/commit/921fcfd1598d5efcaca584f2ad4df652735399f3))
+
 ## 5.1.1 (2026-07-12)
 ### Bug Fixes
 
@@ -792,17 +805,3 @@
 ### Bug Fixes
 
 * warning on top of dashboard page ([#512](https://github.com/ellite/Wallos/issues/512)) ([9056722](https://github.com/ellite/Wallos/commit/905672243b75e6b3d367d439bdbbb37d1b5ae0fa))
-
-## 2.23.0 (2024-09-01)
-### Features
-
-* add multi email recipients ([fed0192](https://github.com/ellite/Wallos/commit/fed0192394e77409dae04d4ab3cdda0ba0c578a4))
-* add option for also showing the original price on the dashboard ([fed0192](https://github.com/ellite/Wallos/commit/fed0192394e77409dae04d4ab3cdda0ba0c578a4))
-* open edit form after cloning subscription ([fed0192](https://github.com/ellite/Wallos/commit/fed0192394e77409dae04d4ab3cdda0ba0c578a4))
-* select multiple filters on the dashboard ([fed0192](https://github.com/ellite/Wallos/commit/fed0192394e77409dae04d4ab3cdda0ba0c578a4))
-
-
-### Bug Fixes
-
-* export.php csv header typo ([#499](https://github.com/ellite/Wallos/issues/499)) ([6e96c5d](https://github.com/ellite/Wallos/commit/6e96c5d4b0c7264ab37a85e9a8b8062f96f69c5c))
-* typo on export subscriptions to csv ([fed0192](https://github.com/ellite/Wallos/commit/fed0192394e77409dae04d4ab3cdda0ba0c578a4))
