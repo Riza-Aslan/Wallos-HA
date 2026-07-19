@@ -8,6 +8,35 @@
 
 ---
 
+## 5.4.1 (2026-07-18)
+### Bug Fixes
+
+* bump version ([#1131](https://github.com/ellite/Wallos/issues/1131)) ([18dd08b](https://github.com/ellite/Wallos/commit/18dd08bd80a85b4f21fc30b25f04172af07f2e13))
+
+## 5.4.0 (2026-07-18)
+### Features
+
+* add Arabic localization ([aff3ed0](https://github.com/ellite/Wallos/commit/aff3ed06b154a6b9bca6d0777f5935b5f9e8dd59))
+* add manual logo search box and png prioritization ([aff3ed0](https://github.com/ellite/Wallos/commit/aff3ed06b154a6b9bca6d0777f5935b5f9e8dd59))
+* add OIDC_REQUIRE_EMAIL_VERIFIED environment variable and SSRF_ALLOWLIST environment variable ([aff3ed0](https://github.com/ellite/Wallos/commit/aff3ed06b154a6b9bca6d0777f5935b5f9e8dd59))
+
+
+### Bug Fixes
+
+* ai recommendations not handling varied provider responses ([aff3ed0](https://github.com/ellite/Wallos/commit/aff3ed06b154a6b9bca6d0777f5935b5f9e8dd59))
+* deleting orphaned logos not taking into account themed variants ([aff3ed0](https://github.com/ellite/Wallos/commit/aff3ed06b154a6b9bca6d0777f5935b5f9e8dd59))
+* email notification test rejecting non-admin users ([aff3ed0](https://github.com/ellite/Wallos/commit/aff3ed06b154a6b9bca6d0777f5935b5f9e8dd59))
+* notification test/send requests hanging on unreachable hosts ([aff3ed0](https://github.com/ellite/Wallos/commit/aff3ed06b154a6b9bca6d0777f5935b5f9e8dd59))
+* pin discord notification action to a commit sha ([aff3ed0](https://github.com/ellite/Wallos/commit/aff3ed06b154a6b9bca6d0777f5935b5f9e8dd59))
+* progress bar showing 100% when next payment is more than one cycle away ([aff3ed0](https://github.com/ellite/Wallos/commit/aff3ed06b154a6b9bca6d0777f5935b5f9e8dd59))
+* service worker caching stale logo search results and broken images as logos ([aff3ed0](https://github.com/ellite/Wallos/commit/aff3ed06b154a6b9bca6d0777f5935b5f9e8dd59))
+* stats page not using themed logo variants ([aff3ed0](https://github.com/ellite/Wallos/commit/aff3ed06b154a6b9bca6d0777f5935b5f9e8dd59))
+
+## 5.3.0 (2026-07-18)
+### Features
+
+* add payment-period budgeting ([4b8fbe5](https://github.com/ellite/Wallos/commit/4b8fbe578c8a27ba668db5feaeb005f5718519f4))
+
 ## 5.2.0 (2026-07-14)
 ### Features
 
@@ -784,24 +813,3 @@
 ### Bug Fixes
 
 * small layout issue on the settings page ([0623ceb](https://github.com/ellite/Wallos/commit/0623cebe67182b493770615c518977907e11d359))
-
-## 2.24.0 (2024-09-18)
-### Features
-
-* add button to clean up search field ([da3ee78](https://github.com/ellite/Wallos/commit/da3ee782f13c1eaa98a85de5dbe33714d173a323))
-
-
-### Bug Fixes
-
-* cases where theme and sort cookies could be missing ([da3ee78](https://github.com/ellite/Wallos/commit/da3ee782f13c1eaa98a85de5dbe33714d173a323))
-* position of dropdown on rtl layout ([da3ee78](https://github.com/ellite/Wallos/commit/da3ee782f13c1eaa98a85de5dbe33714d173a323))
-
-## 2.23.2 (2024-09-04)
-### Bug Fixes
-
-* sort order after edit subscription in case the cookie is missing ([87809fe](https://github.com/ellite/Wallos/commit/87809fea71b92c7518173fedd189d7e76ce11bfb))
-
-## 2.23.1 (2024-09-01)
-### Bug Fixes
-
-* warning on top of dashboard page ([#512](https://github.com/ellite/Wallos/issues/512)) ([9056722](https://github.com/ellite/Wallos/commit/905672243b75e6b3d367d439bdbbb37d1b5ae0fa))
