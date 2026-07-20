@@ -8,6 +8,11 @@
 
 ---
 
+## 5.4.2 (2026-07-19)
+### Bug Fixes
+
+* use themed version of the logo on edit subscription page ([#1133](https://github.com/ellite/Wallos/issues/1133)) ([e913511](https://github.com/ellite/Wallos/commit/e9135115d0e238f78c5561ecb00c9e36acb63dd6))
+
 ## 5.4.1 (2026-07-18)
 ### Bug Fixes
 
@@ -808,8 +813,3 @@
 ### Features
 
 * add 2fa support ([#525](https://github.com/ellite/Wallos/issues/525)) ([2f16ab3](https://github.com/ellite/Wallos/commit/2f16ab3fdf89b8ba6b1010510d8b169aad425f38))
-
-## 2.24.1 (2024-09-23)
-### Bug Fixes
-
-* small layout issue on the settings page ([0623ceb](https://github.com/ellite/Wallos/commit/0623cebe67182b493770615c518977907e11d359))
