@@ -8,6 +8,19 @@
 
 ---
 
+## 5.4.4 (2026-08-15)
+### Bug Fixes
+
+* bump version ([#1162](https://github.com/ellite/Wallos/issues/1162)) ([1efd340](https://github.com/ellite/Wallos/commit/1efd340c92ff713e1ec71682065846bd210acb6a))
+
+## 5.4.3 (2026-08-15)
+### Bug Fixes
+
+* **security:** block IPv6 transition addresses in SSRF guard ([44e3b62](https://github.com/ellite/Wallos/commit/44e3b62a2e4ae01fb3f3bf3ec8db35ce5b8783df))
+* **security:** rate limit totp verification ([44e3b62](https://github.com/ellite/Wallos/commit/44e3b62a2e4ae01fb3f3bf3ec8db35ce5b8783df))
+* **security:** stream database backups instead of writing them to the web root ([44e3b62](https://github.com/ellite/Wallos/commit/44e3b62a2e4ae01fb3f3bf3ec8db35ce5b8783df))
+* **security:** unsafe zip extraction during db restore ([44e3b62](https://github.com/ellite/Wallos/commit/44e3b62a2e4ae01fb3f3bf3ec8db35ce5b8783df))
+
 ## 5.4.2 (2026-07-19)
 ### Bug Fixes
 
@@ -802,14 +815,3 @@
 ### Bug Fixes
 
 * small fixes and typos ([a173d27](https://github.com/ellite/Wallos/commit/a173d2765fd2a1a641f32fbea198775b1bdc0b00))
-
-## 2.26.0 (2024-09-29)
-### Features
-
-* add mobile menu navigation to experimental settings ([1dbba18](https://github.com/ellite/Wallos/commit/1dbba18446ac53568492af9d2aee3f90db7168ca))
-* use browsers locale to set dates on the dashboard ([1dbba18](https://github.com/ellite/Wallos/commit/1dbba18446ac53568492af9d2aee3f90db7168ca))
-
-## 2.25.0 (2024-09-28)
-### Features
-
-* add 2fa support ([#525](https://github.com/ellite/Wallos/issues/525)) ([2f16ab3](https://github.com/ellite/Wallos/commit/2f16ab3fdf89b8ba6b1010510d8b169aad425f38))
