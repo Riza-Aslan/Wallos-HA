@@ -8,6 +8,25 @@
 
 ---
 
+## 5.4.5 (2026-08-23)
+### Bug Fixes
+
+* scope currency rate updates to the user being refreshed ([#1165](https://github.com/ellite/Wallos/issues/1165)) ([267f057](https://github.com/ellite/Wallos/commit/267f057bec332f29cb19e9478f20f0212baaf65c))
+* oidc not showing after v4 update ([#1175](https://github.com/ellite/Wallos/issues/1175)) ([267f057](https://github.com/ellite/Wallos/commit/267f057bec332f29cb19e9478f20f0212baaf65c)), closes [#1169](https://github.com/ellite/Wallos/issues/1169) [#1144](https://github.com/ellite/Wallos/issues/1144)
+* crash when filtering all-user-subscription in get_subscriptions API ([#1175](https://github.com/ellite/Wallos/issues/1175)) ([267f057](https://github.com/ellite/Wallos/commit/267f057bec332f29cb19e9478f20f0212baaf65c)), closes [#1157](https://github.com/ellite/Wallos/issues/1157) [#1159](https://github.com/ellite/Wallos/issues/1159)
+* 2FA QR code fails for usernames with non-ASCII characters ([#1175](https://github.com/ellite/Wallos/issues/1175)) ([267f057](https://github.com/ellite/Wallos/commit/267f057bec332f29cb19e9478f20f0212baaf65c)), closes [#1147](https://github.com/ellite/Wallos/issues/1147)
+* convert_currency ignored by the iCal feed ([#1175](https://github.com/ellite/Wallos/issues/1175)) ([267f057](https://github.com/ellite/Wallos/commit/267f057bec332f29cb19e9478f20f0212baaf65c)), closes [#1158](https://github.com/ellite/Wallos/issues/1158)
+* restored database is not migrated ([#1175](https://github.com/ellite/Wallos/issues/1175)) ([267f057](https://github.com/ellite/Wallos/commit/267f057bec332f29cb19e9478f20f0212baaf65c)), closes [#1164](https://github.com/ellite/Wallos/issues/1164)
+* setup token not logged when generated outside a fresh install ([#1175](https://github.com/ellite/Wallos/issues/1175)) ([267f057](https://github.com/ellite/Wallos/commit/267f057bec332f29cb19e9478f20f0212baaf65c)), closes [#1154](https://github.com/ellite/Wallos/issues/1154)
+* logo save failures reported as success ([#1175](https://github.com/ellite/Wallos/issues/1175)) ([267f057](https://github.com/ellite/Wallos/commit/267f057bec332f29cb19e9478f20f0212baaf65c)), closes [#1150](https://github.com/ellite/Wallos/issues/1150)
+
+
+### Performance Improvements
+
+* convert prices from a loaded rate map instead of one query per row ([#1166](https://github.com/ellite/Wallos/issues/1166)) ([267f057](https://github.com/ellite/Wallos/commit/267f057bec332f29cb19e9478f20f0212baaf65c))
+* refresh exchange rates in one transaction with one prepared statement ([#1167](https://github.com/ellite/Wallos/issues/1167)) ([267f057](https://github.com/ellite/Wallos/commit/267f057bec332f29cb19e9478f20f0212baaf65c))
+* index the subscription queries Wallos runs on every page ([#1168](https://github.com/ellite/Wallos/issues/1168)) ([267f057](https://github.com/ellite/Wallos/commit/267f057bec332f29cb19e9478f20f0212baaf65c))
+
 ## 5.4.4 (2026-08-15)
 ### Bug Fixes
 
@@ -801,17 +820,3 @@
 ### Bug Fixes
 
 * add missing assets to the service worker ([#542](https://github.com/ellite/Wallos/issues/542)) ([0251da2](https://github.com/ellite/Wallos/commit/0251da23f4254420a471fcd4c4951d0d0b1bb4df))
-
-## 2.27.0 (2024-10-04)
-### Features
-
-* api endpoint to calculate monthly cost ([a173d27](https://github.com/ellite/Wallos/commit/a173d2765fd2a1a641f32fbea198775b1bdc0b00))
-* fisrt api endpoint ([a173d27](https://github.com/ellite/Wallos/commit/a173d2765fd2a1a641f32fbea198775b1bdc0b00))
-* redesigned experimental mobile navigation menu ([a173d27](https://github.com/ellite/Wallos/commit/a173d2765fd2a1a641f32fbea198775b1bdc0b00))
-* split settings page into settings and profile page ([a173d27](https://github.com/ellite/Wallos/commit/a173d2765fd2a1a641f32fbea198775b1bdc0b00))
-* user has api key available on profile page ([a173d27](https://github.com/ellite/Wallos/commit/a173d2765fd2a1a641f32fbea198775b1bdc0b00))
-
-
-### Bug Fixes
-
-* small fixes and typos ([a173d27](https://github.com/ellite/Wallos/commit/a173d2765fd2a1a641f32fbea198775b1bdc0b00))
