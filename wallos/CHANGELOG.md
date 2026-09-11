@@ -8,6 +8,23 @@
 
 ---
 
+## 5.7.1 (2026-09-10)
+### Bug Fixes
+
+* bump version ([6d6d1f0](https://github.com/ellite/Wallos/commit/6d6d1f08da33cf940a573c98f5aedf2dd62c4a07))
+* bump version ([d84fdd4](https://github.com/ellite/Wallos/commit/d84fdd4b3d2bf969b6e4259517b5f1d503cd750c))
+
+## 5.7.0 (2026-09-10)
+### Features
+
+* cancellation in dashboard & general statistics ([#1207](https://github.com/ellite/Wallos/issues/1207)) ([e38403d](https://github.com/ellite/Wallos/commit/e38403d920edd0cd6dfa2fc20f91c7160c888201))
+* support Markdown notes with safe rendering ([5a92009](https://github.com/ellite/Wallos/commit/5a92009ac96179a1d11944fb869483b351abefb3))
+
+
+### Bug Fixes
+
+* **pwa:** offline mode, icons and background ([5ffa841](https://github.com/ellite/Wallos/commit/5ffa8417293ded9b693633f5407f6dddc4868388))
+
 ## 5.6.0 (2026-09-08)
 ### Features
 
@@ -824,27 +841,3 @@
 
 * mysql injection vulnerability ([3d6a8c3](https://github.com/ellite/Wallos/commit/3d6a8c340843230eff97b459e85efbea55aac01f))
 * new profile page not being cached by service worker ([3d6a8c3](https://github.com/ellite/Wallos/commit/3d6a8c340843230eff97b459e85efbea55aac01f))
-
-## 2.29.0 (2024-10-09)
-### Features
-
-* add url and notes as variables for the notifications webhook ([790defb](https://github.com/ellite/Wallos/commit/790defb2b1d1cd3d8c93738155edb19f96d0aa2a))
-
-
-### Bug Fixes
-
-* bug when looping multiple subscriptions on the notifications webhook ([790defb](https://github.com/ellite/Wallos/commit/790defb2b1d1cd3d8c93738155edb19f96d0aa2a))
-
-## 2.28.0 (2024-10-07)
-### Features
-
-* get admin setting api endpoint ([07d456a](https://github.com/ellite/Wallos/commit/07d456a9c3d9cc3eb9ae80edb666caa103cababe))
-* get categories endpoint ([07d456a](https://github.com/ellite/Wallos/commit/07d456a9c3d9cc3eb9ae80edb666caa103cababe))
-* get currencies endpoint ([07d456a](https://github.com/ellite/Wallos/commit/07d456a9c3d9cc3eb9ae80edb666caa103cababe))
-* get fixer api endpoint ([07d456a](https://github.com/ellite/Wallos/commit/07d456a9c3d9cc3eb9ae80edb666caa103cababe))
-* get household api endpoint ([07d456a](https://github.com/ellite/Wallos/commit/07d456a9c3d9cc3eb9ae80edb666caa103cababe))
-* get notifications api endpoint ([07d456a](https://github.com/ellite/Wallos/commit/07d456a9c3d9cc3eb9ae80edb666caa103cababe))
-* get payment methods api endpoint ([07d456a](https://github.com/ellite/Wallos/commit/07d456a9c3d9cc3eb9ae80edb666caa103cababe))
-* get settings api endpoint ([07d456a](https://github.com/ellite/Wallos/commit/07d456a9c3d9cc3eb9ae80edb666caa103cababe))
-* get subscriptions api endpoint ([07d456a](https://github.com/ellite/Wallos/commit/07d456a9c3d9cc3eb9ae80edb666caa103cababe))
-* get user api endpoint ([07d456a](https://github.com/ellite/Wallos/commit/07d456a9c3d9cc3eb9ae80edb666caa103cababe))
