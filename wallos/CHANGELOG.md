@@ -8,6 +8,12 @@
 
 ---
 
+## 5.8.2 (2026-09-27)
+### Bug Fixes
+
+* **auth:** enforce SSO-only server-side, not just in the UI (GHSA-vhv8-cw23-59xm) ([#1246](https://github.com/ellite/Wallos/issues/1246)) ([a81772e](https://github.com/ellite/Wallos/commit/a81772eb0bb0277744e2a9cba584afab21628500))
+* **subscriptions:** enforce foreign-key ownership on subscription save (GHSA-797x-473j-px9p) ([ba9973d](https://github.com/ellite/Wallos/commit/ba9973d9e2b38d16ccb44cc14ed1d1af9b4dfe3b))
+
 ## 5.8.1 (2026-09-18)
 ### Bug Fixes
 
@@ -848,8 +854,3 @@
 ### Bug Fixes
 
 * verify correct path before creating logos folder ([782ebcd](https://github.com/ellite/Wallos/commit/782ebcd64fc947ea82eabaac6bc26a32676271a1))
-
-## 2.30.0 (2024-10-13)
-### Features
-
-* add vietnamese translation ([#573](https://github.com/ellite/Wallos/issues/573)) ([45ff10f](https://github.com/ellite/Wallos/commit/45ff10f953f4af681252ed4d77c32b375f9c396c))
