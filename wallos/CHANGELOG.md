@@ -8,6 +8,11 @@
 
 ---
 
+## 5.8.3 (2026-10-01)
+### Bug Fixes
+
+* invalidate service worker cache on version update ([#1247](https://github.com/ellite/Wallos/issues/1247)) ([#1250](https://github.com/ellite/Wallos/issues/1250)) ([d2623b4](https://github.com/ellite/Wallos/commit/d2623b412032e9bd1ce35a3afefd8c85b3c7e127))
+
 ## 5.8.2 (2026-09-27)
 ### Bug Fixes
 
@@ -849,8 +854,3 @@
 ### Features
 
 * handle webhook payload as string if it is not a json object ([#583](https://github.com/ellite/Wallos/issues/583)) ([ee834d6](https://github.com/ellite/Wallos/commit/ee834d6198fa3315facd23a734655adf391bb736))
-
-## 2.30.1 (2024-10-14)
-### Bug Fixes
-
-* verify correct path before creating logos folder ([782ebcd](https://github.com/ellite/Wallos/commit/782ebcd64fc947ea82eabaac6bc26a32676271a1))
