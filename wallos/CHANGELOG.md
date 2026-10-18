@@ -8,6 +8,63 @@
 
 ---
 
+## 5.10.0 (2026-10-17)
+### Features
+
+* **bulk:** bulk actions on the subscriptions page: select subscriptions, then enable or disable notifications, set the notification timing, category or payment method, or delete them ([#1271](https://github.com/ellite/Wallos/pull/1271)) - thanks @iamvicliu
+* **bulk:** polish the bulk toolbar and keep Apply disabled until it has something to apply ([29b5b5d](https://github.com/ellite/Wallos/commit/29b5b5d2a1e62ab97fbef0c817bf60e8e7037e55))
+* **calendar:** show the renewal type and the price in calendar entries ([#1270](https://github.com/ellite/Wallos/pull/1270)) - thanks @iamvicliu
+* **i18n:** an account that changes its language takes its default category and payment method names with it ([#1231](https://github.com/ellite/Wallos/pull/1231)) - thanks @thorstenhornung1
+
+
+### Bug Fixes
+
+* **bulk:** keep payer and category rows in step with bulk delete and set-category ([b3a4d98](https://github.com/ellite/Wallos/commit/b3a4d9879848e7d430d9f700fc2b8ec824dbab7c))
+* **i18n:** rename default names when switching between any two languages ([b3acdc0](https://github.com/ellite/Wallos/commit/b3acdc0672aea5fa73a960c2f6617ef68065812b))
+* **subscriptions:** align the subscription columns using a grid layout, so long amounts no longer push the billing cycle and date out of line ([#1149](https://github.com/ellite/Wallos/issues/1149), [#1249](https://github.com/ellite/Wallos/pull/1249)) - thanks @reuvab
+* **details:** use a valid locale in the subscription details popup, so prices show correctly for zh_cn, zh_tw, pt_br and sr_lat ([#1265](https://github.com/ellite/Wallos/pull/1265)) - thanks @iamvicliu
+* **api:** a refused endpoint request answers with an HTTP error status instead of 200 ([#1238](https://github.com/ellite/Wallos/pull/1238)) - thanks @thorstenhornung1
+
+## 5.9.0 (2026-10-17)
+### Features
+
+* **subscriptions:** allow several categories per subscription ([d750eac](https://github.com/ellite/Wallos/commit/d750eacc6b6bb80bc25d365cd378671589d25ffb))
+* **subscriptions:** allow several payers per subscription ([faa0226](https://github.com/ellite/Wallos/commit/faa0226801ca6fc85326efa212c33c8f19525798))
+* **subscriptions:** show card actions as a 2x2 grid ([a224dd2](https://github.com/ellite/Wallos/commit/a224dd2b2dc332673c3043aeb1095a364e8a4302))
+
+
+### Bug Fixes
+
+* **pwa:** rename the static cache when a script or stylesheet changes ([1d37f89](https://github.com/ellite/Wallos/commit/1d37f898d458c97dee70c09767588a58e715af5b))
+* **stats:** drop point labels and dates from the cost trend graph ([3a1da1c](https://github.com/ellite/Wallos/commit/3a1da1c00677766201588cae7baa247b112a1934))
+
+## 5.8.4 (2026-10-17)
+### Bug Fixes
+
+* **i18n:** complete Arabic translation and plural "days before" label ([#1266](https://github.com/ellite/Wallos/issues/1266)) ([ff78a22](https://github.com/ellite/Wallos/commit/ff78a22b994b826bf4e5d2dcd7c5bd9322cd1e02)) - thanks @salehnemari-max
+* **notifications:** a custom webhook/ntfy header value can no longer end the notification run ([#1228](https://github.com/ellite/Wallos/issues/1228), [#1212](https://github.com/ellite/Wallos/issues/1212)) - thanks @thorstenhornung1
+* **webhook:** keep newline-separated headers working and strip CR/LF from header values
+* **webhook:** send JSON payloads with a JSON Content-Type ([#990](https://github.com/ellite/Wallos/issues/990))
+* **push:** do not let a second first-use replace the VAPID keypair ([#1229](https://github.com/ellite/Wallos/issues/1229)) - thanks @thorstenhornung1
+* **api:** answer for the settings writes that were made, not the ones attempted ([#1236](https://github.com/ellite/Wallos/issues/1236)) - thanks @thorstenhornung1
+* **backup:** remove the archive even when the download is abandoned ([#1237](https://github.com/ellite/Wallos/issues/1237)) - thanks @thorstenhornung1
+* **oidc:** consume the state on disk before the token exchange, not after it ([#1240](https://github.com/ellite/Wallos/issues/1240), [#1239](https://github.com/ellite/Wallos/issues/1239)) - thanks @thorstenhornung1
+* **oidc:** send id_token_hint and client_id on RP-initiated logout ([#891](https://github.com/ellite/Wallos/issues/891))
+* **export:** prefix CSV with UTF-8 BOM so currency symbols open correctly ([#863](https://github.com/ellite/Wallos/issues/863))
+* **export:** tolerate subscriptions with no payer, payment method or category
+* **subscriptions:** sort by price using the converted main-currency value ([#861](https://github.com/ellite/Wallos/issues/861))
+* **i18n:** fill in missing Japanese translations ([#1252](https://github.com/ellite/Wallos/issues/1252)) - thanks @akine
+* guard dashboard stats against unresolved payment method ([#1180](https://github.com/ellite/Wallos/issues/1180)) - thanks @SAY-5
+* tolerate missing subscription relations in list views ([#1260](https://github.com/ellite/Wallos/issues/1260)) - thanks @pengusto
+* preserve layout classes when changing the theme ([#1263](https://github.com/ellite/Wallos/issues/1263)) - thanks @pengusto
+
+
+### Continuous Integration
+
+* stop building an image ref from an empty variable on fork pull requests ([#1230](https://github.com/ellite/Wallos/issues/1230)) - thanks @thorstenhornung1 and @gwpreston
+
+All bugfix-session changes landed in [#1267](https://github.com/ellite/Wallos/pull/1267).
+
 ## 5.8.3 (2026-10-01)
 ### Bug Fixes
 
@@ -838,19 +895,3 @@
 ### Features
 
 * replacement for disabled subscriptions, to more accurately calculate savings ([5c92528](https://github.com/ellite/Wallos/commit/5c9252880837a7886c903ddc7ae92c8fed29b452))
-
-## 2.32.0 (2024-10-27)
-### Features
-
-* settings to allow to ignore certificates for some notification methods ([2a0e665](https://github.com/ellite/Wallos/commit/2a0e665e77eca804fa70dafc1a3a0010eb9da270))
-
-## 2.31.1 (2024-10-25)
-### Bug Fixes
-
-* add missing {{days_until}} variable to string version of the webhook ([ebc7b83](https://github.com/ellite/Wallos/commit/ebc7b83e9a0a32aecf3b1aa933408bf9b6baea3a))
-* display actual error message when email test fails ([ebc7b83](https://github.com/ellite/Wallos/commit/ebc7b83e9a0a32aecf3b1aa933408bf9b6baea3a))
-
-## 2.31.0 (2024-10-22)
-### Features
-
-* handle webhook payload as string if it is not a json object ([#583](https://github.com/ellite/Wallos/issues/583)) ([ee834d6](https://github.com/ellite/Wallos/commit/ee834d6198fa3315facd23a734655adf391bb736))
