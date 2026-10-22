@@ -8,6 +8,12 @@
 
 ---
 
+## 5.10.1 (2026-10-21)
+### Bug Fixes
+
+* **docker:** rebuild on php 8.3.36 to pick up the security release (CVE-2026-109618, CVE-2026-109619) ([a540a9e](https://github.com/ellite/Wallos/commit/a540a9e3146cdf689d88e2e5b2d2f8acbb1e064f))
+* **docker:** rebuild on php 8.3.36 to pick up the security release (CVE-2026-109618, CVE-2026-109619) ([9e560ed](https://github.com/ellite/Wallos/commit/9e560ed091035b9524aca28e4e6026b2a1bac8f9))
+
 ## 5.10.0 (2026-10-17)
 ### Features
 
@@ -890,8 +896,3 @@ All bugfix-session changes landed in [#1267](https://github.com/ellite/Wallos/pu
 
 * improve localization ([6480f87](https://github.com/ellite/Wallos/commit/6480f8744094d5ce0f05d7d155925540ac73b156))
 * layout issue on the settings page ([#598](https://github.com/ellite/Wallos/issues/598)) ([6480f87](https://github.com/ellite/Wallos/commit/6480f8744094d5ce0f05d7d155925540ac73b156))
-
-## 2.33.0 (2024-10-29)
-### Features
-
-* replacement for disabled subscriptions, to more accurately calculate savings ([5c92528](https://github.com/ellite/Wallos/commit/5c9252880837a7886c903ddc7ae92c8fed29b452))
