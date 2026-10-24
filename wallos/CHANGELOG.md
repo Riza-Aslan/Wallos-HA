@@ -8,6 +8,11 @@
 
 ---
 
+## 5.10.2 (2026-10-23)
+### Bug Fixes
+
+* **docker:** fall back to IPv4-only nginx when IPv6 is unavailable ([#1287](https://github.com/ellite/Wallos/issues/1287)) ([a41bae7](https://github.com/ellite/Wallos/commit/a41bae7acdeed1a42f67df1ea9b9e7a982da00e2))
+
 ## 5.10.1 (2026-10-21)
 ### Bug Fixes
 
@@ -890,9 +895,3 @@ All bugfix-session changes landed in [#1267](https://github.com/ellite/Wallos/pu
 ### Bug Fixes
 
 * filters for categories and payment method respect order from settings ([f007adf](https://github.com/ellite/Wallos/commit/f007adf9658eb1fd095c2716e4146130535f6cb7))
-
-## 2.33.1 (2024-10-30)
-### Bug Fixes
-
-* improve localization ([6480f87](https://github.com/ellite/Wallos/commit/6480f8744094d5ce0f05d7d155925540ac73b156))
-* layout issue on the settings page ([#598](https://github.com/ellite/Wallos/issues/598)) ([6480f87](https://github.com/ellite/Wallos/commit/6480f8744094d5ce0f05d7d155925540ac73b156))
