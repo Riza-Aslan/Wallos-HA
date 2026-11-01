@@ -8,6 +8,11 @@
 
 ---
 
+## 5.10.3 (2026-10-31)
+### Bug Fixes
+
+* **vuln:** stored XSS in admin context via unescaped push-service response in sendnotifications.php ([#1295](https://github.com/ellite/Wallos/issues/1295)) ([693d867](https://github.com/ellite/Wallos/commit/693d8676f3e5b0c85e120fc5958ccb82f37ee89c))
+
 ## 5.10.2 (2026-10-23)
 ### Bug Fixes
 
@@ -884,14 +889,3 @@ All bugfix-session changes landed in [#1267](https://github.com/ellite/Wallos/pu
 
 * new menu icons ([28444ab](https://github.com/ellite/Wallos/commit/28444abef1cee338e41e57cbf6f13666b917bbde))
 * swipe subscription for actions on the experimental mobile navigation ([28444ab](https://github.com/ellite/Wallos/commit/28444abef1cee338e41e57cbf6f13666b917bbde))
-
-## 2.34.0 (2024-10-31)
-### Features
-
-* link version update banner to github release ([f007adf](https://github.com/ellite/Wallos/commit/f007adf9658eb1fd095c2716e4146130535f6cb7))
-* only show filters that are actually used ([f007adf](https://github.com/ellite/Wallos/commit/f007adf9658eb1fd095c2716e4146130535f6cb7))
-
-
-### Bug Fixes
-
-* filters for categories and payment method respect order from settings ([f007adf](https://github.com/ellite/Wallos/commit/f007adf9658eb1fd095c2716e4146130535f6cb7))
