@@ -8,6 +8,11 @@
 
 ---
 
+## 5.11.2 (2026-11-18)
+### Bug Fixes
+
+* validate subscription frequency and harden payment loops against infinite execution ([1c470f8](https://github.com/ellite/Wallos/commit/1c470f8c99648fd4633e94108ceae268dddc5a76))
+
 ## 5.11.1 (2026-11-07)
 ### Bug Fixes
 
@@ -918,8 +923,3 @@ All bugfix-session changes landed in [#1267](https://github.com/ellite/Wallos/pu
 ### Bug Fixes
 
 * notifications being sent on the wrong day ([f085f8a](https://github.com/ellite/Wallos/commit/f085f8adece3af2548858f665db16d4843d3e622))
-
-## 2.36.2 (2024-11-03)
-### Bug Fixes
-
-* only show swipe hint on mobile screens ([#612](https://github.com/ellite/Wallos/issues/612)) ([bd5e351](https://github.com/ellite/Wallos/commit/bd5e3511829a798ab47ca5e9c9d080aae45ae1a0))
