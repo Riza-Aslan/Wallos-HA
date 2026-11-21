@@ -8,6 +8,17 @@
 
 ---
 
+## 5.11.3 (2026-11-20)
+### Bug Fixes
+
+* **security:** deny access to the database and temp folders on Apache ([b421041](https://github.com/ellite/Wallos/commit/b42104177bdbecda84d31c2d4e4b5a0f54218a5f))
+* **security:** fill managed SMTP fields in the test email only for the admin ([b421041](https://github.com/ellite/Wallos/commit/b42104177bdbecda84d31c2d4e4b5a0f54218a5f))
+* **security:** re-validate every redirect hop in the logo and payment searches ([b421041](https://github.com/ellite/Wallos/commit/b42104177bdbecda84d31c2d4e4b5a0f54218a5f))
+* **security:** require a login for the logo and payment search endpoints ([b421041](https://github.com/ellite/Wallos/commit/b42104177bdbecda84d31c2d4e4b5a0f54218a5f))
+* **security:** require the current password to change the account password ([b421041](https://github.com/ellite/Wallos/commit/b42104177bdbecda84d31c2d4e4b5a0f54218a5f))
+* **security:** revoke remember-me logins when the password changes or is reset ([b421041](https://github.com/ellite/Wallos/commit/b42104177bdbecda84d31c2d4e4b5a0f54218a5f))
+* **security:** throttle failed password logins ([b421041](https://github.com/ellite/Wallos/commit/b42104177bdbecda84d31c2d4e4b5a0f54218a5f))
+
 ## 5.11.2 (2026-11-18)
 ### Bug Fixes
 
@@ -913,13 +924,3 @@ All bugfix-session changes landed in [#1267](https://github.com/ellite/Wallos/pu
 ### Bug Fixes
 
 * version mismatch ([#627](https://github.com/ellite/Wallos/issues/627)) ([c4a9b16](https://github.com/ellite/Wallos/commit/c4a9b1627fbc7278398bf2d8bf7cae2934d349ca))
-
-## 2.37.0 (2024-11-15)
-### Features
-
-* add monthly statistics to the calendar page ([f085f8a](https://github.com/ellite/Wallos/commit/f085f8adece3af2548858f665db16d4843d3e622))
-
-
-### Bug Fixes
-
-* notifications being sent on the wrong day ([f085f8a](https://github.com/ellite/Wallos/commit/f085f8adece3af2548858f665db16d4843d3e622))
